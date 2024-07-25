@@ -137,6 +137,10 @@ public class Profile implements Serializable {
     @Column(name = "profile_state")
     private ProfileState profileState;
 
+    // Table relation
+    @OneToOne(mappedBy = "profile")
+    private User user;
+
     @JsonIgnoreProperties(value = { "profile" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)

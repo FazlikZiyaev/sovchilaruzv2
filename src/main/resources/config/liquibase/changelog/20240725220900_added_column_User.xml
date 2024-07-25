@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+
+    <changeSet id="20240725220900_added_column_User" author="fazlik">
+
+        <addColumn tableName="jhi_user">
+            <column name="profile_id" type="${uuidType}"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseTableName="jhi_user"
+                                 baseColumnNames="profile_id"
+                                 constraintName="fk_user_profile"
+                                 referencedTableName="profile"
+                                 referencedColumnNames="id" />
+
+
+    </changeSet>
+</databaseChangeLog>
