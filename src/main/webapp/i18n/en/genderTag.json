@@ -1,0 +1,27 @@
+{
+  "sovchilaruzv2App": {
+    "genderTag": {
+      "home": {
+        "title": "Gender Tags",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Gender Tag",
+        "createOrEditLabel": "Create or edit a Gender Tag",
+        "notFound": "No Gender Tags found"
+      },
+      "created": "A new Gender Tag is created with identifier {{ param }}",
+      "updated": "A Gender Tag is updated with identifier {{ param }}",
+      "deleted": "A Gender Tag is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Gender Tag {{ id }}?"
+      },
+      "detail": {
+        "title": "Gender Tag"
+      },
+      "id": "Id",
+      "hashtag": "Hashtag",
+      "gender": "Gender",
+      "state": "State",
+      "profile": "Profile"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+export enum InfoType {
+  PHONE_NUMBER = 'PHONE_NUMBER',
+
+  INSTAGRAM = 'INSTAGRAM',
+
+  TELEGRAM = 'TELEGRAM',
+
+  FACEBOOK = 'FACEBOOK',
+
+  WHATSAPP = 'WHATSAPP',
+
+  TIKTOK = 'TIKTOK',
+}

@@ -1,0 +1,28 @@
+{
+  "sovchilaruzv2App": {
+    "contactInfo": {
+      "home": {
+        "title": "Contact Infos",
+        "refreshListLabel": "Обновить список",
+        "createLabel": "Создать новый Contact Info",
+        "createOrEditLabel": "Создать или отредактировать Contact Info",
+        "notFound": "Contact Infos не найдено"
+      },
+      "created": "Новый Contact Info создан с идентификатором {{ param }}",
+      "updated": "Contact Info обновлен с идентификатором {{ param }}",
+      "deleted": "Contact Info удален с идентификатором {{ param }}",
+      "delete": {
+        "question": "Вы уверены что хотите удалить Contact Info {{ id }}?"
+      },
+      "detail": {
+        "title": "Contact Info"
+      },
+      "id": "Id",
+      "type": "Type",
+      "text": "Text",
+      "ord": "Ord",
+      "state": "State",
+      "profile": "Profile"
+    }
+  }
+}

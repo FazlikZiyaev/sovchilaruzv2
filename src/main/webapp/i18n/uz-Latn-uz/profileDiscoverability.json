@@ -1,0 +1,27 @@
+{
+  "sovchilaruzv2App": {
+    "profileDiscoverability": {
+      "home": {
+        "title": "Profile Discoverabilities",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Yangi Profile Discoverability qo`shish",
+        "createOrEditLabel": "Profile Discoverabilityni tahrirlash",
+        "notFound": "No Profile Discoverabilities found"
+      },
+      "created": "Profile Discoverability {{ param }} bilan qo`shildi",
+      "updated": "{{ param }}- Profile Discoverability saqlandi",
+      "deleted": "{{ param }}- Profile Discoverability o`chirildi",
+      "delete": {
+        "question": "{{ id }}- Profile Discoverabilityni o`chirmoqchimisiz? "
+      },
+      "detail": {
+        "title": "Profile Discoverability"
+      },
+      "id": "ID",
+      "maritalStatus": "Marital Status",
+      "maxAge": "Max Age",
+      "minAge": "Min Age",
+      "showMyPhoto": "Show My Photo"
+    }
+  }
+}

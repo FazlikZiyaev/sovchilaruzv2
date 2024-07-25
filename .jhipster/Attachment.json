@@ -1,0 +1,28 @@
+{
+  "applications": "*",
+  "changelogDate": "20240725153335",
+  "dto": "mapstruct",
+  "entityTableName": "attachment",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "UUID"
+    },
+    {
+      "fieldName": "fileKey",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength", "required"],
+      "fieldValidateRulesMaxlength": "256"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "EntityState",
+      "fieldValues": "ACTIVE,INACTIVE,DELETED"
+    }
+  ],
+  "name": "Attachment",
+  "pagination": "infinite-scroll",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

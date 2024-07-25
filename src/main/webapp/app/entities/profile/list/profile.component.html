@@ -1,0 +1,284 @@
+<div>
+  <h2 id="page-heading" data-cy="ProfileHeading">
+    <span jhiTranslate="sovchilaruzv2App.profile.home.title">Profiles</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="sovchilaruzv2App.profile.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-profile"
+        [routerLink]="['/profile/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="sovchilaruzv2App.profile.home.createLabel">Create a new Profile</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="profiles?.length === 0">
+    <span jhiTranslate="sovchilaruzv2App.profile.home.notFound">No Profiles found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="profiles && profiles.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.id">Id</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="gender">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.gender">Gender</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="age">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.age">Age</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="height">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.height">Height</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="weight">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.weight">Weight</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="education">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.education">Education</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="profession">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.profession">Profession</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="workPlace">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.workPlace">Work Place</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="isHealthy">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.isHealthy">Is Healthy</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="healthIssues">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.healthIssues">Health Issues</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="dateOfBirth">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.dateOfBirth">Date Of Birth</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="placeOfBirth">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.placeOfBirth">Place Of Birth</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="maritalStatus">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.maritalStatus">Marital Status</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="childPlanInFuture">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.childPlanInFuture">Child Plan In Future</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="numOfMembersInFamily">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.numOfMembersInFamily">Num Of Members In Family</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="numOfChildrenInFamily">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.numOfChildrenInFamily">Num Of Children In Family</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="birthPositionInFamily">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.birthPositionInFamily">Birth Position In Family</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="hasOwnDwelling">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.hasOwnDwelling">Has Own Dwelling</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="wantToStudy">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.wantToStudy">Want To Study</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="wantToWork">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.wantToWork">Want To Work</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="readyToRelocate">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.readyToRelocate">Ready To Relocate</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="knowledgeOfLanguages">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.knowledgeOfLanguages">Knowledge Of Languages</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="skills">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.skills">Skills</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="bio">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.bio">Bio</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="requirements">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.requirements">Requirements</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="profileState">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.profileState">Profile State</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="location.id">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.location">Location</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="discoverability.id">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.discoverability">Discoverability</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="nationality.id">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profile.nationality">Nationality</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let profile of profiles; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/profile', profile.id, 'view']">{{ profile.id }}</a>
+          </td>
+          <td jhiTranslate="{{ 'sovchilaruzv2App.Gender.' + profile.gender }}">{{ profile.gender }}</td>
+          <td>{{ profile.age }}</td>
+          <td>{{ profile.height }}</td>
+          <td>{{ profile.weight }}</td>
+          <td jhiTranslate="{{ 'sovchilaruzv2App.Education.' + profile.education }}">{{ profile.education }}</td>
+          <td>{{ profile.profession }}</td>
+          <td>{{ profile.workPlace }}</td>
+          <td>{{ profile.isHealthy }}</td>
+          <td>{{ profile.healthIssues }}</td>
+          <td>{{ profile.dateOfBirth | formatMediumDate }}</td>
+          <td>{{ profile.placeOfBirth }}</td>
+          <td jhiTranslate="{{ 'sovchilaruzv2App.MaritalStatus.' + profile.maritalStatus }}">{{ profile.maritalStatus }}</td>
+          <td jhiTranslate="{{ 'sovchilaruzv2App.ChildPlan.' + profile.childPlanInFuture }}">{{ profile.childPlanInFuture }}</td>
+          <td>{{ profile.numOfMembersInFamily }}</td>
+          <td>{{ profile.numOfChildrenInFamily }}</td>
+          <td>{{ profile.birthPositionInFamily }}</td>
+          <td>{{ profile.hasOwnDwelling }}</td>
+          <td>{{ profile.wantToStudy }}</td>
+          <td>{{ profile.wantToWork }}</td>
+          <td>{{ profile.readyToRelocate }}</td>
+          <td>{{ profile.knowledgeOfLanguages }}</td>
+          <td>{{ profile.skills }}</td>
+          <td>{{ profile.bio }}</td>
+          <td>{{ profile.requirements }}</td>
+          <td jhiTranslate="{{ 'sovchilaruzv2App.ProfileState.' + profile.profileState }}">{{ profile.profileState }}</td>
+          <td>
+            <div *ngIf="profile.location">
+              <a [routerLink]="['/location', profile.location.id, 'view']">{{ profile.location.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="profile.discoverability">
+              <a [routerLink]="['/profile-discoverability', profile.discoverability.id, 'view']">{{ profile.discoverability.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="profile.nationality">
+              <a [routerLink]="['/nationality', profile.nationality.id, 'view']">{{ profile.nationality.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <a [routerLink]="['/profile', profile.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </a>
+
+              <a [routerLink]="['/profile', profile.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </a>
+
+              <button type="submit" (click)="delete(profile)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

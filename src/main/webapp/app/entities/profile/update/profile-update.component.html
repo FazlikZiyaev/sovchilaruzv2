@@ -1,0 +1,613 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-profile-heading" data-cy="ProfileCreateUpdateHeading" jhiTranslate="sovchilaruzv2App.profile.home.createOrEditLabel">
+        Create or edit a Profile
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.id" for="field_id">Id</label>
+          <input type="text" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.gender" for="field_gender">Gender</label>
+          <select class="form-control" name="gender" formControlName="gender" id="field_gender" data-cy="gender">
+            <option [ngValue]="null">{{ 'sovchilaruzv2App.Gender.null' | translate }}</option>
+            <option *ngFor="let gender of genderValues" [value]="gender">{{ 'sovchilaruzv2App.Gender.' + gender | translate }}</option>
+          </select>
+          <div *ngIf="editForm.get('gender')!.invalid && (editForm.get('gender')!.dirty || editForm.get('gender')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('gender')?.errors?.required" jhiTranslate="entity.validation.required"
+              >This field is required.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.age" for="field_age">Age</label>
+          <input type="number" class="form-control" name="age" id="field_age" data-cy="age" formControlName="age" />
+          <div *ngIf="editForm.get('age')!.invalid && (editForm.get('age')!.dirty || editForm.get('age')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('age')?.errors?.required" jhiTranslate="entity.validation.required"
+              >This field is required.</small
+            >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('age')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 18 }"
+              >This field should be at least 18.</small
+            >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('age')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 99 }"
+              >This field cannot be more than 99.</small
+            >
+            <small class="form-text text-danger" [hidden]="!editForm.get('age')?.errors?.number" jhiTranslate="entity.validation.number"
+              >This field should be a number.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.height" for="field_height">Height</label>
+          <input type="number" class="form-control" name="height" id="field_height" data-cy="height" formControlName="height" />
+          <div *ngIf="editForm.get('height')!.invalid && (editForm.get('height')!.dirty || editForm.get('height')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('height')?.errors?.required" jhiTranslate="entity.validation.required"
+              >This field is required.</small
+            >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('height')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0.0 }"
+              >This field should be at least 0.</small
+            >
+            <small class="form-text text-danger" [hidden]="!editForm.get('height')?.errors?.number" jhiTranslate="entity.validation.number"
+              >This field should be a number.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.weight" for="field_weight">Weight</label>
+          <input type="number" class="form-control" name="weight" id="field_weight" data-cy="weight" formControlName="weight" />
+          <div *ngIf="editForm.get('weight')!.invalid && (editForm.get('weight')!.dirty || editForm.get('weight')!.touched)">
+            <small class="form-text text-danger" *ngIf="editForm.get('weight')?.errors?.required" jhiTranslate="entity.validation.required"
+              >This field is required.</small
+            >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('weight')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 0.0 }"
+              >This field should be at least 0.</small
+            >
+            <small class="form-text text-danger" [hidden]="!editForm.get('weight')?.errors?.number" jhiTranslate="entity.validation.number"
+              >This field should be a number.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.education" for="field_education">Education</label>
+          <select class="form-control" name="education" formControlName="education" id="field_education" data-cy="education">
+            <option [ngValue]="null">{{ 'sovchilaruzv2App.Education.null' | translate }}</option>
+            <option *ngFor="let education of educationValues" [value]="education">
+              {{ 'sovchilaruzv2App.Education.' + education | translate }}
+            </option>
+          </select>
+          <div *ngIf="editForm.get('education')!.invalid && (editForm.get('education')!.dirty || editForm.get('education')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('education')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+              >This field is required.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.profession" for="field_profession">Profession</label>
+          <input
+            type="text"
+            class="form-control"
+            name="profession"
+            id="field_profession"
+            data-cy="profession"
+            formControlName="profession"
+          />
+          <div *ngIf="editForm.get('profession')!.invalid && (editForm.get('profession')!.dirty || editForm.get('profession')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('profession')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 256 }"
+              >This field cannot be longer than 256 characters.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.workPlace" for="field_workPlace">Work Place</label>
+          <input type="text" class="form-control" name="workPlace" id="field_workPlace" data-cy="workPlace" formControlName="workPlace" />
+          <div *ngIf="editForm.get('workPlace')!.invalid && (editForm.get('workPlace')!.dirty || editForm.get('workPlace')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('workPlace')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 1 }"
+              >This field is required to be at least 1 characters.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.isHealthy" for="field_isHealthy">Is Healthy</label>
+          <input type="checkbox" class="form-check" name="isHealthy" id="field_isHealthy" data-cy="isHealthy" formControlName="isHealthy" />
+          <div *ngIf="editForm.get('isHealthy')!.invalid && (editForm.get('isHealthy')!.dirty || editForm.get('isHealthy')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('isHealthy')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+              >This field is required.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.healthIssues" for="field_healthIssues">Health Issues</label>
+          <input
+            type="text"
+            class="form-control"
+            name="healthIssues"
+            id="field_healthIssues"
+            data-cy="healthIssues"
+            formControlName="healthIssues"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.dateOfBirth" for="field_dateOfBirth">Date Of Birth</label>
+          <div class="input-group">
+            <input
+              id="field_dateOfBirth"
+              data-cy="dateOfBirth"
+              type="text"
+              class="form-control"
+              name="dateOfBirth"
+              ngbDatepicker
+              #dateOfBirthDp="ngbDatepicker"
+              formControlName="dateOfBirth"
+            />
+            <button type="button" class="btn btn-secondary" (click)="dateOfBirthDp.toggle()">
+              <fa-icon icon="calendar-alt"></fa-icon>
+            </button>
+          </div>
+          <div *ngIf="editForm.get('dateOfBirth')!.invalid && (editForm.get('dateOfBirth')!.dirty || editForm.get('dateOfBirth')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('dateOfBirth')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+              >This field is required.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.placeOfBirth" for="field_placeOfBirth">Place Of Birth</label>
+          <input
+            type="text"
+            class="form-control"
+            name="placeOfBirth"
+            id="field_placeOfBirth"
+            data-cy="placeOfBirth"
+            formControlName="placeOfBirth"
+          />
+          <div
+            *ngIf="editForm.get('placeOfBirth')!.invalid && (editForm.get('placeOfBirth')!.dirty || editForm.get('placeOfBirth')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('placeOfBirth')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+              >This field is required.</small
+            >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('placeOfBirth')?.errors?.minlength"
+              jhiTranslate="entity.validation.minlength"
+              [translateValues]="{ min: 1 }"
+              >This field is required to be at least 1 characters.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.maritalStatus" for="field_maritalStatus">Marital Status</label>
+          <select
+            class="form-control"
+            name="maritalStatus"
+            formControlName="maritalStatus"
+            id="field_maritalStatus"
+            data-cy="maritalStatus"
+          >
+            <option [ngValue]="null">{{ 'sovchilaruzv2App.MaritalStatus.null' | translate }}</option>
+            <option *ngFor="let maritalStatus of maritalStatusValues" [value]="maritalStatus">
+              {{ 'sovchilaruzv2App.MaritalStatus.' + maritalStatus | translate }}
+            </option>
+          </select>
+          <div
+            *ngIf="
+              editForm.get('maritalStatus')!.invalid && (editForm.get('maritalStatus')!.dirty || editForm.get('maritalStatus')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('maritalStatus')?.errors?.required"
+              jhiTranslate="entity.validation.required"
+              >This field is required.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.childPlanInFuture" for="field_childPlanInFuture"
+            >Child Plan In Future</label
+          >
+          <select
+            class="form-control"
+            name="childPlanInFuture"
+            formControlName="childPlanInFuture"
+            id="field_childPlanInFuture"
+            data-cy="childPlanInFuture"
+          >
+            <option [ngValue]="null">{{ 'sovchilaruzv2App.ChildPlan.null' | translate }}</option>
+            <option *ngFor="let childPlan of childPlanValues" [value]="childPlan">
+              {{ 'sovchilaruzv2App.ChildPlan.' + childPlan | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.numOfMembersInFamily" for="field_numOfMembersInFamily"
+            >Num Of Members In Family</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="numOfMembersInFamily"
+            id="field_numOfMembersInFamily"
+            data-cy="numOfMembersInFamily"
+            formControlName="numOfMembersInFamily"
+          />
+          <div
+            *ngIf="
+              editForm.get('numOfMembersInFamily')!.invalid &&
+              (editForm.get('numOfMembersInFamily')!.dirty || editForm.get('numOfMembersInFamily')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('numOfMembersInFamily')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 1 }"
+              >This field should be at least 1.</small
+            >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('numOfMembersInFamily')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 20 }"
+              >This field cannot be more than 20.</small
+            >
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('numOfMembersInFamily')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+              >This field should be a number.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.numOfChildrenInFamily" for="field_numOfChildrenInFamily"
+            >Num Of Children In Family</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="numOfChildrenInFamily"
+            id="field_numOfChildrenInFamily"
+            data-cy="numOfChildrenInFamily"
+            formControlName="numOfChildrenInFamily"
+          />
+          <div
+            *ngIf="
+              editForm.get('numOfChildrenInFamily')!.invalid &&
+              (editForm.get('numOfChildrenInFamily')!.dirty || editForm.get('numOfChildrenInFamily')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('numOfChildrenInFamily')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 1 }"
+              >This field should be at least 1.</small
+            >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('numOfChildrenInFamily')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 20 }"
+              >This field cannot be more than 20.</small
+            >
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('numOfChildrenInFamily')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+              >This field should be a number.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.birthPositionInFamily" for="field_birthPositionInFamily"
+            >Birth Position In Family</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="birthPositionInFamily"
+            id="field_birthPositionInFamily"
+            data-cy="birthPositionInFamily"
+            formControlName="birthPositionInFamily"
+          />
+          <div
+            *ngIf="
+              editForm.get('birthPositionInFamily')!.invalid &&
+              (editForm.get('birthPositionInFamily')!.dirty || editForm.get('birthPositionInFamily')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('birthPositionInFamily')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 1 }"
+              >This field should be at least 1.</small
+            >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('birthPositionInFamily')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 20 }"
+              >This field cannot be more than 20.</small
+            >
+            <small
+              class="form-text text-danger"
+              [hidden]="!editForm.get('birthPositionInFamily')?.errors?.number"
+              jhiTranslate="entity.validation.number"
+              >This field should be a number.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.hasOwnDwelling" for="field_hasOwnDwelling"
+            >Has Own Dwelling</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="hasOwnDwelling"
+            id="field_hasOwnDwelling"
+            data-cy="hasOwnDwelling"
+            formControlName="hasOwnDwelling"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.wantToStudy" for="field_wantToStudy">Want To Study</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="wantToStudy"
+            id="field_wantToStudy"
+            data-cy="wantToStudy"
+            formControlName="wantToStudy"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.wantToWork" for="field_wantToWork">Want To Work</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="wantToWork"
+            id="field_wantToWork"
+            data-cy="wantToWork"
+            formControlName="wantToWork"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.readyToRelocate" for="field_readyToRelocate"
+            >Ready To Relocate</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="readyToRelocate"
+            id="field_readyToRelocate"
+            data-cy="readyToRelocate"
+            formControlName="readyToRelocate"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.knowledgeOfLanguages" for="field_knowledgeOfLanguages"
+            >Knowledge Of Languages</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="knowledgeOfLanguages"
+            id="field_knowledgeOfLanguages"
+            data-cy="knowledgeOfLanguages"
+            formControlName="knowledgeOfLanguages"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.skills" for="field_skills">Skills</label>
+          <input type="text" class="form-control" name="skills" id="field_skills" data-cy="skills" formControlName="skills" />
+          <div *ngIf="editForm.get('skills')!.invalid && (editForm.get('skills')!.dirty || editForm.get('skills')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('skills')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 256 }"
+              >This field cannot be longer than 256 characters.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.bio" for="field_bio">Bio</label>
+          <input type="text" class="form-control" name="bio" id="field_bio" data-cy="bio" formControlName="bio" />
+          <div *ngIf="editForm.get('bio')!.invalid && (editForm.get('bio')!.dirty || editForm.get('bio')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('bio')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 400 }"
+              >This field cannot be longer than 400 characters.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.requirements" for="field_requirements">Requirements</label>
+          <input
+            type="text"
+            class="form-control"
+            name="requirements"
+            id="field_requirements"
+            data-cy="requirements"
+            formControlName="requirements"
+          />
+          <div
+            *ngIf="editForm.get('requirements')!.invalid && (editForm.get('requirements')!.dirty || editForm.get('requirements')!.touched)"
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('requirements')?.errors?.maxlength"
+              jhiTranslate="entity.validation.maxlength"
+              [translateValues]="{ max: 256 }"
+              >This field cannot be longer than 256 characters.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.profileState" for="field_profileState">Profile State</label>
+          <select class="form-control" name="profileState" formControlName="profileState" id="field_profileState" data-cy="profileState">
+            <option [ngValue]="null">{{ 'sovchilaruzv2App.ProfileState.null' | translate }}</option>
+            <option *ngFor="let profileState of profileStateValues" [value]="profileState">
+              {{ 'sovchilaruzv2App.ProfileState.' + profileState | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.location" for="field_location">Location</label>
+          <select
+            class="form-control"
+            id="field_location"
+            data-cy="location"
+            name="location"
+            formControlName="location"
+            [compareWith]="compareLocation"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="locationOption" *ngFor="let locationOption of locationsCollection">{{ locationOption.id }}</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.discoverability" for="field_discoverability"
+            >Discoverability</label
+          >
+          <select
+            class="form-control"
+            id="field_discoverability"
+            data-cy="discoverability"
+            name="discoverability"
+            formControlName="discoverability"
+            [compareWith]="compareProfileDiscoverability"
+          >
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="profileDiscoverabilityOption"
+              *ngFor="let profileDiscoverabilityOption of profileDiscoverabilitiesSharedCollection"
+            >
+              {{ profileDiscoverabilityOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profile.nationality" for="field_nationality">Nationality</label>
+          <select
+            class="form-control"
+            id="field_nationality"
+            data-cy="nationality"
+            name="nationality"
+            formControlName="nationality"
+            [compareWith]="compareNationality"
+          >
+            <option [ngValue]="null"></option>
+            <option [ngValue]="nationalityOption" *ngFor="let nationalityOption of nationalitiesSharedCollection">
+              {{ nationalityOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label jhiTranslate="sovchilaruzv2App.profile.genderTags" for="field_genderTags">Gender Tags</label>
+          <select
+            class="form-control"
+            id="field_genderTags"
+            data-cy="genderTags"
+            multiple
+            name="genderTags"
+            formControlName="genderTags"
+            [compareWith]="compareGenderTag"
+          >
+            <option [ngValue]="genderTagOption" *ngFor="let genderTagOption of genderTagsSharedCollection">{{ genderTagOption.id }}</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

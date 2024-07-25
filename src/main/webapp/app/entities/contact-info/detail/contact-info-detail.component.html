@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="contactInfo">
+      <h2 data-cy="contactInfoDetailsHeading"><span jhiTranslate="sovchilaruzv2App.contactInfo.detail.title">Contact Info</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="sovchilaruzv2App.contactInfo.id">Id</span></dt>
+        <dd>
+          <span>{{ contactInfo.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.contactInfo.type">Type</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'sovchilaruzv2App.InfoType.' + contactInfo.type }}">{{ contactInfo.type }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.contactInfo.text">Text</span></dt>
+        <dd>
+          <span>{{ contactInfo.text }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.contactInfo.ord">Ord</span></dt>
+        <dd>
+          <span>{{ contactInfo.ord }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.contactInfo.state">State</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'sovchilaruzv2App.EntityState.' + contactInfo.state }}">{{ contactInfo.state }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.contactInfo.profile">Profile</span></dt>
+        <dd>
+          <div *ngIf="contactInfo.profile">
+            <a [routerLink]="['/profile', contactInfo.profile.id, 'view']">{{ contactInfo.profile.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/contact-info', contactInfo.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

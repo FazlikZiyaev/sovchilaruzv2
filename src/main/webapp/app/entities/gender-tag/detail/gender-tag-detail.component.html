@@ -1,0 +1,40 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="genderTag">
+      <h2 data-cy="genderTagDetailsHeading"><span jhiTranslate="sovchilaruzv2App.genderTag.detail.title">Gender Tag</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="sovchilaruzv2App.genderTag.id">Id</span></dt>
+        <dd>
+          <span>{{ genderTag.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.genderTag.hashtag">Hashtag</span></dt>
+        <dd>
+          <span>{{ genderTag.hashtag }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.genderTag.gender">Gender</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'sovchilaruzv2App.Gender.' + genderTag.gender }}">{{ genderTag.gender }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.genderTag.state">State</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'sovchilaruzv2App.EntityState.' + genderTag.state }}">{{ genderTag.state }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/gender-tag', genderTag.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+{
+  "sovchilaruzv2App": {
+    "nationality": {
+      "home": {
+        "title": "Nationalities",
+        "refreshListLabel": "Обновить список",
+        "createLabel": "Создать новый Nationality",
+        "createOrEditLabel": "Создать или отредактировать Nationality",
+        "notFound": "Nationalities не найдено"
+      },
+      "created": "Новый Nationality создан с идентификатором {{ param }}",
+      "updated": "Nationality обновлен с идентификатором {{ param }}",
+      "deleted": "Nationality удален с идентификатором {{ param }}",
+      "delete": {
+        "question": "Вы уверены что хотите удалить Nationality {{ id }}?"
+      },
+      "detail": {
+        "title": "Nationality"
+      },
+      "id": "Id",
+      "name": "Name",
+      "ord": "Ord",
+      "state": "State"
+    }
+  }
+}

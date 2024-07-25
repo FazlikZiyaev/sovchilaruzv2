@@ -1,0 +1,26 @@
+{
+  "sovchilaruzv2App": {
+    "nationality": {
+      "home": {
+        "title": "Nationalities",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Янги Nationality қўшиш",
+        "createOrEditLabel": "Nationalityни таҳрирлаш",
+        "notFound": "No Nationalities found"
+      },
+      "created": "Nationality {{ param }} билан қўшилди.",
+      "updated": "{{ param }}- Nationality сақланди.",
+      "deleted": "{{ param }}- Nationality ўчирилди.",
+      "delete": {
+        "question": "{{ id }}- Nationalityни ўчирмоқчимисиз? "
+      },
+      "detail": {
+        "title": "Nationality"
+      },
+      "id": "Id",
+      "name": "Name",
+      "ord": "Ord",
+      "state": "State"
+    }
+  }
+}

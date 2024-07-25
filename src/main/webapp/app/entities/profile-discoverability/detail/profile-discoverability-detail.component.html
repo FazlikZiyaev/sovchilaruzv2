@@ -1,0 +1,48 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="profileDiscoverability">
+      <h2 data-cy="profileDiscoverabilityDetailsHeading">
+        <span jhiTranslate="sovchilaruzv2App.profileDiscoverability.detail.title">Profile Discoverability</span>
+      </h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="global.field.id">ID</span></dt>
+        <dd>
+          <span>{{ profileDiscoverability.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profileDiscoverability.maritalStatus">Marital Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'sovchilaruzv2App.MaritalStatus.' + profileDiscoverability.maritalStatus }}">{{
+            profileDiscoverability.maritalStatus
+          }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profileDiscoverability.maxAge">Max Age</span></dt>
+        <dd>
+          <span>{{ profileDiscoverability.maxAge }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profileDiscoverability.minAge">Min Age</span></dt>
+        <dd>
+          <span>{{ profileDiscoverability.minAge }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profileDiscoverability.showMyPhoto">Show My Photo</span></dt>
+        <dd>
+          <span>{{ profileDiscoverability.showMyPhoto }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/profile-discoverability', profileDiscoverability.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

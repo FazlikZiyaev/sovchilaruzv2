@@ -1,0 +1,10 @@
+{
+  "sovchilaruzv2App": {
+    "EntityState": {
+      "null": "",
+      "ACTIVE": "ACTIVE",
+      "INACTIVE": "INACTIVE",
+      "DELETED": "DELETED"
+    }
+  }
+}

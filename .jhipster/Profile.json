@@ -1,0 +1,194 @@
+{
+  "applications": "*",
+  "changelogDate": "20240725152735",
+  "dto": "mapstruct",
+  "entityTableName": "profile",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "UUID"
+    },
+    {
+      "fieldName": "gender",
+      "fieldType": "Gender",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "MALE,FEMALE"
+    },
+    {
+      "fieldName": "age",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max", "required"],
+      "fieldValidateRulesMax": "99",
+      "fieldValidateRulesMin": "18"
+    },
+    {
+      "fieldName": "height",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0.0"
+    },
+    {
+      "fieldName": "weight",
+      "fieldType": "Double",
+      "fieldValidateRules": ["min", "required"],
+      "fieldValidateRulesMin": "0.0"
+    },
+    {
+      "fieldName": "education",
+      "fieldType": "Education",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "PRIMARY_EDUCATION,SECONDARY_EDUCATION,INCOMPLETE_HIGHER_BACHELOR_EDUCATION,COMPLETE_HIGHER_BACHELOR_EDUCATION,INCOMPLETE_HIGHER_MASTER_EDUCATION,COMPLETE_HIGHER_MASTER_EDUCATION"
+    },
+    {
+      "fieldName": "profession",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "256"
+    },
+    {
+      "fieldName": "workPlace",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength"],
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "isHealthy",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "healthIssues",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateOfBirth",
+      "fieldType": "LocalDate",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "placeOfBirth",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "required"],
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "maritalStatus",
+      "fieldType": "MaritalStatus",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "UNMARRIED,DIVORCED_THROUGH_COURT,DIVORCED_NOT_THROUGH_COURT,WIDOW"
+    },
+    {
+      "fieldName": "childPlanInFuture",
+      "fieldType": "ChildPlan",
+      "fieldValues": "WANT_CHILDREN,DONT_WANT_CHILDREN,HAVE_CHILDREN_AND_WANT_MORE,HAVE_CHILDREN_AND_DONT_WANT_MORE,NOT_SURE_YET"
+    },
+    {
+      "fieldName": "numOfMembersInFamily",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "20",
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "numOfChildrenInFamily",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "20",
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "birthPositionInFamily",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "20",
+      "fieldValidateRulesMin": "1"
+    },
+    {
+      "fieldName": "hasOwnDwelling",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "wantToStudy",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "wantToWork",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "readyToRelocate",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "knowledgeOfLanguages",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "skills",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "256"
+    },
+    {
+      "fieldName": "bio",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "400"
+    },
+    {
+      "fieldName": "requirements",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "256"
+    },
+    {
+      "fieldName": "profileState",
+      "fieldType": "ProfileState",
+      "fieldValues": "NEW,ACCEPTED,CHECKING,BLOCKED"
+    }
+  ],
+  "name": "Profile",
+  "pagination": "infinite-scroll",
+  "relationships": [
+    {
+      "otherEntityName": "location",
+      "relationshipName": "location",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "contactInfo",
+      "otherEntityRelationshipName": "profile",
+      "relationshipName": "contactInfos",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "attachment",
+      "relationshipName": "attachments",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "profileDiscoverability",
+      "relationshipName": "discoverability",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "id",
+      "otherEntityName": "nationality",
+      "relationshipName": "nationality",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "genderTag",
+      "relationshipName": "genderTags",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-many"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

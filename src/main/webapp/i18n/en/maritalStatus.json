@@ -1,0 +1,11 @@
+{
+  "sovchilaruzv2App": {
+    "MaritalStatus": {
+      "null": "",
+      "UNMARRIED": "UNMARRIED",
+      "DIVORCED_THROUGH_COURT": "DIVORCED_THROUGH_COURT",
+      "DIVORCED_NOT_THROUGH_COURT": "DIVORCED_NOT_THROUGH_COURT",
+      "WIDOW": "WIDOW"
+    }
+  }
+}

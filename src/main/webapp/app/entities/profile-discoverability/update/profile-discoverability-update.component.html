@@ -1,0 +1,118 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-profile-discoverability-heading"
+        data-cy="ProfileDiscoverabilityCreateUpdateHeading"
+        jhiTranslate="sovchilaruzv2App.profileDiscoverability.home.createOrEditLabel"
+      >
+        Create or edit a Profile Discoverability
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profileDiscoverability.maritalStatus" for="field_maritalStatus"
+            >Marital Status</label
+          >
+          <select
+            class="form-control"
+            name="maritalStatus"
+            formControlName="maritalStatus"
+            id="field_maritalStatus"
+            data-cy="maritalStatus"
+          >
+            <option [ngValue]="null">{{ 'sovchilaruzv2App.MaritalStatus.null' | translate }}</option>
+            <option *ngFor="let maritalStatus of maritalStatusValues" [value]="maritalStatus">
+              {{ 'sovchilaruzv2App.MaritalStatus.' + maritalStatus | translate }}
+            </option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profileDiscoverability.maxAge" for="field_maxAge">Max Age</label>
+          <input type="number" class="form-control" name="maxAge" id="field_maxAge" data-cy="maxAge" formControlName="maxAge" />
+          <div *ngIf="editForm.get('maxAge')!.invalid && (editForm.get('maxAge')!.dirty || editForm.get('maxAge')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('maxAge')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 18 }"
+              >This field should be at least 18.</small
+            >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('maxAge')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 99 }"
+              >This field cannot be more than 99.</small
+            >
+            <small class="form-text text-danger" [hidden]="!editForm.get('maxAge')?.errors?.number" jhiTranslate="entity.validation.number"
+              >This field should be a number.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profileDiscoverability.minAge" for="field_minAge">Min Age</label>
+          <input type="number" class="form-control" name="minAge" id="field_minAge" data-cy="minAge" formControlName="minAge" />
+          <div *ngIf="editForm.get('minAge')!.invalid && (editForm.get('minAge')!.dirty || editForm.get('minAge')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('minAge')?.errors?.min"
+              jhiTranslate="entity.validation.min"
+              [translateValues]="{ min: 18 }"
+              >This field should be at least 18.</small
+            >
+            <small
+              class="form-text text-danger"
+              *ngIf="editForm.get('minAge')?.errors?.max"
+              jhiTranslate="entity.validation.max"
+              [translateValues]="{ max: 99 }"
+              >This field cannot be more than 99.</small
+            >
+            <small class="form-text text-danger" [hidden]="!editForm.get('minAge')?.errors?.number" jhiTranslate="entity.validation.number"
+              >This field should be a number.</small
+            >
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" jhiTranslate="sovchilaruzv2App.profileDiscoverability.showMyPhoto" for="field_showMyPhoto"
+            >Show My Photo</label
+          >
+          <input
+            type="checkbox"
+            class="form-check"
+            name="showMyPhoto"
+            id="field_showMyPhoto"
+            data-cy="showMyPhoto"
+            formControlName="showMyPhoto"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

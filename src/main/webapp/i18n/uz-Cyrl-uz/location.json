@@ -1,0 +1,31 @@
+{
+  "sovchilaruzv2App": {
+    "location": {
+      "home": {
+        "title": "Locations",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Янги Location қўшиш",
+        "createOrEditLabel": "Locationни таҳрирлаш",
+        "notFound": "No Locations found"
+      },
+      "created": "Location {{ param }} билан қўшилди.",
+      "updated": "{{ param }}- Location сақланди.",
+      "deleted": "{{ param }}- Location ўчирилди.",
+      "delete": {
+        "question": "{{ id }}- Locationни ўчирмоқчимисиз? "
+      },
+      "detail": {
+        "title": "Location"
+      },
+      "id": "ID",
+      "lat": "Lat",
+      "lon": "Lon",
+      "country": "Country",
+      "city": "City",
+      "district": "District",
+      "ord": "Ord",
+      "state": "State",
+      "profile": "Profile"
+    }
+  }
+}

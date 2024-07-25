@@ -1,0 +1,101 @@
+<div>
+  <h2 id="page-heading" data-cy="AttachmentHeading">
+    <span jhiTranslate="sovchilaruzv2App.attachment.home.title">Attachments</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="sovchilaruzv2App.attachment.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-attachment"
+        [routerLink]="['/attachment/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="sovchilaruzv2App.attachment.home.createLabel">Create a new Attachment</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="attachments?.length === 0">
+    <span jhiTranslate="sovchilaruzv2App.attachment.home.notFound">No Attachments found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="attachments && attachments.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.attachment.id">Id</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="fileKey">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.attachment.fileKey">File Key</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="state">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.attachment.state">State</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="profile.id">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.attachment.profile">Profile</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let attachment of attachments; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/attachment', attachment.id, 'view']">{{ attachment.id }}</a>
+          </td>
+          <td>{{ attachment.fileKey }}</td>
+          <td jhiTranslate="{{ 'sovchilaruzv2App.EntityState.' + attachment.state }}">{{ attachment.state }}</td>
+          <td>
+            <div *ngIf="attachment.profile">
+              <a [routerLink]="['/profile', attachment.profile.id, 'view']">{{ attachment.profile.id }}</a>
+            </div>
+          </td>
+          <td class="text-end">
+            <div class="btn-group">
+              <a [routerLink]="['/attachment', attachment.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </a>
+
+              <a [routerLink]="['/attachment', attachment.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </a>
+
+              <button type="submit" (click)="delete(attachment)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -81,6 +81,17 @@ public class CacheConfiguration {
             createCache(cm, uz.devops.sovchilaruzv2.domain.User.class.getName(), jcacheConfiguration);
             createCache(cm, uz.devops.sovchilaruzv2.domain.Authority.class.getName(), jcacheConfiguration);
             createCache(cm, uz.devops.sovchilaruzv2.domain.User.class.getName() + ".authorities", jcacheConfiguration);
+            createCache(cm, uz.devops.sovchilaruzv2.domain.Profile.class.getName(), jcacheConfiguration);
+            createCache(cm, uz.devops.sovchilaruzv2.domain.Profile.class.getName() + ".contactInfos", jcacheConfiguration);
+            createCache(cm, uz.devops.sovchilaruzv2.domain.Profile.class.getName() + ".attachments", jcacheConfiguration);
+            createCache(cm, uz.devops.sovchilaruzv2.domain.Profile.class.getName() + ".genderTags", jcacheConfiguration);
+            createCache(cm, uz.devops.sovchilaruzv2.domain.Nationality.class.getName(), jcacheConfiguration);
+            createCache(cm, uz.devops.sovchilaruzv2.domain.ContactInfo.class.getName(), jcacheConfiguration);
+            createCache(cm, uz.devops.sovchilaruzv2.domain.GenderTag.class.getName(), jcacheConfiguration);
+            createCache(cm, uz.devops.sovchilaruzv2.domain.GenderTag.class.getName() + ".profiles", jcacheConfiguration);
+            createCache(cm, uz.devops.sovchilaruzv2.domain.Location.class.getName(), jcacheConfiguration);
+            createCache(cm, uz.devops.sovchilaruzv2.domain.ProfileDiscoverability.class.getName(), jcacheConfiguration);
+            createCache(cm, uz.devops.sovchilaruzv2.domain.Attachment.class.getName(), jcacheConfiguration);
             // jhipster-needle-redis-add-entry
         };
     }

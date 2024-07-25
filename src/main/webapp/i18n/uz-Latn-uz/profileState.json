@@ -1,0 +1,11 @@
+{
+  "sovchilaruzv2App": {
+    "ProfileState": {
+      "null": "",
+      "NEW": "NEW",
+      "ACCEPTED": "ACCEPTED",
+      "CHECKING": "CHECKING",
+      "BLOCKED": "BLOCKED"
+    }
+  }
+}

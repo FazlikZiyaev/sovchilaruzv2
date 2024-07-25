@@ -1,0 +1,35 @@
+{
+  "applications": "*",
+  "changelogDate": "20240725153035",
+  "dto": "mapstruct",
+  "entityTableName": "gender_tag",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "UUID"
+    },
+    {
+      "fieldName": "hashtag",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength", "required"],
+      "fieldValidateRulesMaxlength": "50",
+      "fieldValidateRulesMinlength": "1"
+    },
+    {
+      "fieldName": "gender",
+      "fieldType": "Gender",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "MALE,FEMALE"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "EntityState",
+      "fieldValues": "ACTIVE,INACTIVE,DELETED"
+    }
+  ],
+  "name": "GenderTag",
+  "pagination": "infinite-scroll",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

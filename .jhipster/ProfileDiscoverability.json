@@ -1,0 +1,36 @@
+{
+  "applications": "*",
+  "changelogDate": "20240725153235",
+  "dto": "mapstruct",
+  "entityTableName": "profile_discoverability",
+  "fields": [
+    {
+      "fieldName": "maritalStatus",
+      "fieldType": "MaritalStatus",
+      "fieldValues": "UNMARRIED,DIVORCED_THROUGH_COURT,DIVORCED_NOT_THROUGH_COURT,WIDOW"
+    },
+    {
+      "fieldName": "maxAge",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "99",
+      "fieldValidateRulesMin": "18"
+    },
+    {
+      "fieldName": "minAge",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["min", "max"],
+      "fieldValidateRulesMax": "99",
+      "fieldValidateRulesMin": "18"
+    },
+    {
+      "fieldName": "showMyPhoto",
+      "fieldType": "Boolean"
+    }
+  ],
+  "name": "ProfileDiscoverability",
+  "pagination": "infinite-scroll",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

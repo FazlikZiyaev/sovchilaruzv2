@@ -1,0 +1,31 @@
+{
+  "applications": "*",
+  "changelogDate": "20240725152835",
+  "dto": "mapstruct",
+  "entityTableName": "nationality",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "UUID"
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "ord",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "EntityState",
+      "fieldValues": "ACTIVE,INACTIVE,DELETED"
+    }
+  ],
+  "name": "Nationality",
+  "pagination": "infinite-scroll",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

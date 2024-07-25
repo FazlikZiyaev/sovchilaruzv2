@@ -1,0 +1,27 @@
+{
+  "sovchilaruzv2App": {
+    "genderTag": {
+      "home": {
+        "title": "Gender Tags",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Yangi Gender Tag qo`shish",
+        "createOrEditLabel": "Gender Tagni tahrirlash",
+        "notFound": "No Gender Tags found"
+      },
+      "created": "Gender Tag {{ param }} bilan qo`shildi",
+      "updated": "{{ param }}- Gender Tag saqlandi",
+      "deleted": "{{ param }}- Gender Tag o`chirildi",
+      "delete": {
+        "question": "{{ id }}- Gender Tagni o`chirmoqchimisiz? "
+      },
+      "detail": {
+        "title": "Gender Tag"
+      },
+      "id": "Id",
+      "hashtag": "Hashtag",
+      "gender": "Gender",
+      "state": "State",
+      "profile": "Profile"
+    }
+  }
+}

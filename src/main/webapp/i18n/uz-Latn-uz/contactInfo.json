@@ -1,0 +1,28 @@
+{
+  "sovchilaruzv2App": {
+    "contactInfo": {
+      "home": {
+        "title": "Contact Infos",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Yangi Contact Info qo`shish",
+        "createOrEditLabel": "Contact Infoni tahrirlash",
+        "notFound": "No Contact Infos found"
+      },
+      "created": "Contact Info {{ param }} bilan qo`shildi",
+      "updated": "{{ param }}- Contact Info saqlandi",
+      "deleted": "{{ param }}- Contact Info o`chirildi",
+      "delete": {
+        "question": "{{ id }}- Contact Infoni o`chirmoqchimisiz? "
+      },
+      "detail": {
+        "title": "Contact Info"
+      },
+      "id": "Id",
+      "type": "Type",
+      "text": "Text",
+      "ord": "Ord",
+      "state": "State",
+      "profile": "Profile"
+    }
+  }
+}

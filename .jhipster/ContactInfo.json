@@ -1,0 +1,46 @@
+{
+  "applications": "*",
+  "changelogDate": "20240725152935",
+  "dto": "mapstruct",
+  "entityTableName": "contact_info",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "UUID"
+    },
+    {
+      "fieldName": "type",
+      "fieldType": "InfoType",
+      "fieldValidateRules": ["required"],
+      "fieldValues": "PHONE_NUMBER,INSTAGRAM,TELEGRAM,FACEBOOK,WHATSAPP,TIKTOK"
+    },
+    {
+      "fieldName": "text",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength", "required"],
+      "fieldValidateRulesMaxlength": "256"
+    },
+    {
+      "fieldName": "ord",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "state",
+      "fieldType": "EntityState",
+      "fieldValues": "ACTIVE,INACTIVE,DELETED"
+    }
+  ],
+  "name": "ContactInfo",
+  "pagination": "infinite-scroll",
+  "relationships": [
+    {
+      "otherEntityName": "profile",
+      "otherEntityRelationshipName": "contactInfos",
+      "relationshipName": "profile",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

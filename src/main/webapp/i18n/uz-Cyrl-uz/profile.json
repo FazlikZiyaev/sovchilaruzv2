@@ -1,0 +1,54 @@
+{
+  "sovchilaruzv2App": {
+    "profile": {
+      "home": {
+        "title": "Profiles",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Янги Profile қўшиш",
+        "createOrEditLabel": "Profileни таҳрирлаш",
+        "notFound": "No Profiles found"
+      },
+      "created": "Profile {{ param }} билан қўшилди.",
+      "updated": "{{ param }}- Profile сақланди.",
+      "deleted": "{{ param }}- Profile ўчирилди.",
+      "delete": {
+        "question": "{{ id }}- Profileни ўчирмоқчимисиз? "
+      },
+      "detail": {
+        "title": "Profile"
+      },
+      "id": "Id",
+      "gender": "Gender",
+      "age": "Age",
+      "height": "Height",
+      "weight": "Weight",
+      "education": "Education",
+      "profession": "Profession",
+      "workPlace": "Work Place",
+      "isHealthy": "Is Healthy",
+      "healthIssues": "Health Issues",
+      "dateOfBirth": "Date Of Birth",
+      "placeOfBirth": "Place Of Birth",
+      "maritalStatus": "Marital Status",
+      "childPlanInFuture": "Child Plan In Future",
+      "numOfMembersInFamily": "Num Of Members In Family",
+      "numOfChildrenInFamily": "Num Of Children In Family",
+      "birthPositionInFamily": "Birth Position In Family",
+      "hasOwnDwelling": "Has Own Dwelling",
+      "wantToStudy": "Want To Study",
+      "wantToWork": "Want To Work",
+      "readyToRelocate": "Ready To Relocate",
+      "knowledgeOfLanguages": "Knowledge Of Languages",
+      "skills": "Skills",
+      "bio": "Bio",
+      "requirements": "Requirements",
+      "profileState": "Profile State",
+      "location": "Location",
+      "contactInfos": "Contact Infos",
+      "attachments": "Attachments",
+      "discoverability": "Discoverability",
+      "nationality": "Nationality",
+      "genderTags": "Gender Tags"
+    }
+  }
+}

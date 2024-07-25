@@ -1,0 +1,40 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="nationality">
+      <h2 data-cy="nationalityDetailsHeading"><span jhiTranslate="sovchilaruzv2App.nationality.detail.title">Nationality</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="sovchilaruzv2App.nationality.id">Id</span></dt>
+        <dd>
+          <span>{{ nationality.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.nationality.name">Name</span></dt>
+        <dd>
+          <span>{{ nationality.name }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.nationality.ord">Ord</span></dt>
+        <dd>
+          <span>{{ nationality.ord }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.nationality.state">State</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'sovchilaruzv2App.EntityState.' + nationality.state }}">{{ nationality.state }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/nationality', nationality.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,114 @@
+<div>
+  <h2 id="page-heading" data-cy="ProfileDiscoverabilityHeading">
+    <span jhiTranslate="sovchilaruzv2App.profileDiscoverability.home.title">Profile Discoverabilities</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span jhiTranslate="sovchilaruzv2App.profileDiscoverability.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-profile-discoverability"
+        [routerLink]="['/profile-discoverability/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="sovchilaruzv2App.profileDiscoverability.home.createLabel">Create a new Profile Discoverability</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="profileDiscoverabilities?.length === 0">
+    <span jhiTranslate="sovchilaruzv2App.profileDiscoverability.home.notFound">No Profile Discoverabilities found</span>
+  </div>
+
+  <div class="table-responsive table-entities" id="entities" *ngIf="profileDiscoverabilities && profileDiscoverabilities.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="navigateToWithComponentValues()">
+          <th scope="col" jhiSortBy="id">
+            <div class="d-flex">
+              <span jhiTranslate="global.field.id">ID</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="maritalStatus">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profileDiscoverability.maritalStatus">Marital Status</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="maxAge">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profileDiscoverability.maxAge">Max Age</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="minAge">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profileDiscoverability.minAge">Min Age</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col" jhiSortBy="showMyPhoto">
+            <div class="d-flex">
+              <span jhiTranslate="sovchilaruzv2App.profileDiscoverability.showMyPhoto">Show My Photo</span>
+              <fa-icon class="p-1" icon="sort"></fa-icon>
+            </div>
+          </th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody
+        infinite-scroll
+        (scrolled)="loadPage(page + 1)"
+        [infiniteScrollDisabled]="page - 1 >= links['last']"
+        [infiniteScrollDistance]="0"
+      >
+        <tr *ngFor="let profileDiscoverability of profileDiscoverabilities; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/profile-discoverability', profileDiscoverability.id, 'view']">{{ profileDiscoverability.id }}</a>
+          </td>
+          <td jhiTranslate="{{ 'sovchilaruzv2App.MaritalStatus.' + profileDiscoverability.maritalStatus }}">
+            {{ profileDiscoverability.maritalStatus }}
+          </td>
+          <td>{{ profileDiscoverability.maxAge }}</td>
+          <td>{{ profileDiscoverability.minAge }}</td>
+          <td>{{ profileDiscoverability.showMyPhoto }}</td>
+          <td class="text-end">
+            <div class="btn-group">
+              <a
+                [routerLink]="['/profile-discoverability', profileDiscoverability.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+              </a>
+
+              <a
+                [routerLink]="['/profile-discoverability', profileDiscoverability.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+              </a>
+
+              <button type="submit" (click)="delete(profileDiscoverability)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

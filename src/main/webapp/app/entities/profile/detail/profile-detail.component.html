@@ -1,0 +1,153 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <div *ngIf="profile">
+      <h2 data-cy="profileDetailsHeading"><span jhiTranslate="sovchilaruzv2App.profile.detail.title">Profile</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.id">Id</span></dt>
+        <dd>
+          <span>{{ profile.id }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.gender">Gender</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'sovchilaruzv2App.Gender.' + profile.gender }}">{{ profile.gender }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.age">Age</span></dt>
+        <dd>
+          <span>{{ profile.age }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.height">Height</span></dt>
+        <dd>
+          <span>{{ profile.height }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.weight">Weight</span></dt>
+        <dd>
+          <span>{{ profile.weight }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.education">Education</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'sovchilaruzv2App.Education.' + profile.education }}">{{ profile.education }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.profession">Profession</span></dt>
+        <dd>
+          <span>{{ profile.profession }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.workPlace">Work Place</span></dt>
+        <dd>
+          <span>{{ profile.workPlace }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.isHealthy">Is Healthy</span></dt>
+        <dd>
+          <span>{{ profile.isHealthy }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.healthIssues">Health Issues</span></dt>
+        <dd>
+          <span>{{ profile.healthIssues }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.dateOfBirth">Date Of Birth</span></dt>
+        <dd>
+          <span>{{ profile.dateOfBirth | formatMediumDate }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.placeOfBirth">Place Of Birth</span></dt>
+        <dd>
+          <span>{{ profile.placeOfBirth }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.maritalStatus">Marital Status</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'sovchilaruzv2App.MaritalStatus.' + profile.maritalStatus }}">{{ profile.maritalStatus }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.childPlanInFuture">Child Plan In Future</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'sovchilaruzv2App.ChildPlan.' + profile.childPlanInFuture }}">{{ profile.childPlanInFuture }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.numOfMembersInFamily">Num Of Members In Family</span></dt>
+        <dd>
+          <span>{{ profile.numOfMembersInFamily }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.numOfChildrenInFamily">Num Of Children In Family</span></dt>
+        <dd>
+          <span>{{ profile.numOfChildrenInFamily }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.birthPositionInFamily">Birth Position In Family</span></dt>
+        <dd>
+          <span>{{ profile.birthPositionInFamily }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.hasOwnDwelling">Has Own Dwelling</span></dt>
+        <dd>
+          <span>{{ profile.hasOwnDwelling }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.wantToStudy">Want To Study</span></dt>
+        <dd>
+          <span>{{ profile.wantToStudy }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.wantToWork">Want To Work</span></dt>
+        <dd>
+          <span>{{ profile.wantToWork }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.readyToRelocate">Ready To Relocate</span></dt>
+        <dd>
+          <span>{{ profile.readyToRelocate }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.knowledgeOfLanguages">Knowledge Of Languages</span></dt>
+        <dd>
+          <span>{{ profile.knowledgeOfLanguages }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.skills">Skills</span></dt>
+        <dd>
+          <span>{{ profile.skills }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.bio">Bio</span></dt>
+        <dd>
+          <span>{{ profile.bio }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.requirements">Requirements</span></dt>
+        <dd>
+          <span>{{ profile.requirements }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.profileState">Profile State</span></dt>
+        <dd>
+          <span jhiTranslate="{{ 'sovchilaruzv2App.ProfileState.' + profile.profileState }}">{{ profile.profileState }}</span>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.location">Location</span></dt>
+        <dd>
+          <div *ngIf="profile.location">
+            <a [routerLink]="['/location', profile.location.id, 'view']">{{ profile.location.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.discoverability">Discoverability</span></dt>
+        <dd>
+          <div *ngIf="profile.discoverability">
+            <a [routerLink]="['/profile-discoverability', profile.discoverability.id, 'view']">{{ profile.discoverability.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.nationality">Nationality</span></dt>
+        <dd>
+          <div *ngIf="profile.nationality">
+            <a [routerLink]="['/nationality', profile.nationality.id, 'view']">{{ profile.nationality.id }}</a>
+          </div>
+        </dd>
+        <dt><span jhiTranslate="sovchilaruzv2App.profile.genderTags">Gender Tags</span></dt>
+        <dd>
+          <span *ngFor="let genderTags of profile.genderTags; let last = last">
+            <a [routerLink]="['/gender-tag', genderTags.id, 'view']">{{ genderTags.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/profile', profile.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

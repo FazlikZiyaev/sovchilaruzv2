@@ -1,0 +1,27 @@
+{
+  "sovchilaruzv2App": {
+    "profileDiscoverability": {
+      "home": {
+        "title": "ProfileDiscoverabilities",
+        "refreshListLabel": "Actualiser la liste",
+        "createLabel": "Créer un nouveau Profile Discoverability",
+        "createOrEditLabel": "Créer ou éditer un Profile Discoverability",
+        "notFound": "Aucun Profile Discoverability trouvé"
+      },
+      "created": "Un nouveau Profile Discoverability a été créé avec l'identifiant {{ param }}",
+      "updated": "Le Profile Discoverability avec l'identifiant {{ param }} a été mis à jour",
+      "deleted": "Le Profile Discoverability avec l'identifiant {{ param }} a été supprimé",
+      "delete": {
+        "question": "Êtes-vous certain de vouloir supprimer le Profile Discoverability {{ id }} ?"
+      },
+      "detail": {
+        "title": "Profile Discoverability"
+      },
+      "id": "ID",
+      "maritalStatus": "Marital Status",
+      "maxAge": "Max Age",
+      "minAge": "Min Age",
+      "showMyPhoto": "Show My Photo"
+    }
+  }
+}
