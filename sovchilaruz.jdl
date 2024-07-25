@@ -1,0 +1,211 @@
+
+/* Entity is used to create form, everything belongs to user information */
+entity Profile {
+
+    /* Self information */
+    id UUID,
+    gender Gender required,
+    age Integer min(18) max(99) required,
+    height Double min(0.0) required,
+    weight Double min(0.0) required,
+    education Education required,
+    profession String maxlength(256),
+    workPlace String minlength(1),
+
+    /* if isHealthy == false -> healthIssues required */
+    isHealthy Boolean required,
+    healthIssues String,
+
+    /* Local date example: 2002-15-01 */
+    dateOfBirth LocalDate required,
+    placeOfBirth String minlength(1) required,
+
+    /* Family info */
+    maritalStatus MaritalStatus required,
+    childPlanInFuture ChildPlan,
+    numOfMembersInFamily Integer min(1) max(20),
+    numOfChildrenInFamily Integer min(1) max(20),
+    birthPositionInFamily Integer min(1) max(20),
+    hasOwnDwelling Boolean,
+
+    /* Additional Info */
+    wantToStudy Boolean,
+    wantToWork Boolean,
+    readyToRelocate Boolean,
+
+    /* Belongs to Language enum */
+    knowledgeOfLanguages String,
+    skills String maxlength(256),
+    bio String maxlength(400),
+
+    /* Expectations from partner in String form */
+    requirements String maxlength(256),
+
+    profileState ProfileState
+}
+
+/* Entity is used to determine user Nationality, can be UZBEK, KAZAKH ... */
+entity Nationality {
+    id UUID,
+    name String required,
+    ord Integer,
+    state EntityState
+}
+
+entity ContactInfo {
+    id UUID,
+    type InfoType required,
+    text String maxlength(256) required,
+    ord Integer,
+    state EntityState
+}
+
+entity GenderTag {
+    id UUID,
+    hashtag String minlength(1) maxlength(50) required,
+    gender Gender required,
+    state EntityState
+}
+
+entity Location {
+    lat Double required,
+    lon Double required,
+    country String minlength(2) maxlength(2) required,
+    city String minlength(3) maxlength(50) required,
+    district String minlength(3) maxlength(50) required,
+    ord Integer,
+    state EntityState
+}
+
+entity ProfileDiscoverability {
+    maritalStatus MaritalStatus,
+    maxAge Integer min(18) max(99),
+    minAge Integer min(18) max(99),
+    showMyPhoto Boolean
+}
+
+entity Attachment {
+    id UUID,
+    fileKey String maxlength(256) required,
+    state EntityState
+}
+
+
+/* Enumerations list */
+enum EntityState {
+    ACTIVE,
+    INACTIVE,
+    DELETED
+}
+
+enum Language {
+    RU,
+    EN,
+    UZ
+}
+
+enum InfoType {
+    PHONE_NUMBER,
+    INSTAGRAM,
+    TELEGRAM,
+    FACEBOOK,
+    WHATSAPP,
+    TIKTOK
+}
+
+enum ProfileState {
+    NEW,
+    ACCEPTED,
+    CHECKING,
+    BLOCKED
+}
+
+enum Education {
+    /* School */
+    PRIMARY_EDUCATION,
+
+    /* College or lyceum */
+    SECONDARY_EDUCATION,
+
+    /* Studying in University */
+    INCOMPLETE_HIGHER_BACHELOR_EDUCATION,
+
+    /* Finished University */
+    COMPLETE_HIGHER_BACHELOR_EDUCATION,
+
+    /* Studying for master's degree */
+    INCOMPLETE_HIGHER_MASTER_EDUCATION,
+
+    /* Finished master's degree */
+    COMPLETE_HIGHER_MASTER_EDUCATION
+}
+
+enum ChildPlan {
+    WANT_CHILDREN,
+    DONT_WANT_CHILDREN,
+    HAVE_CHILDREN_AND_WANT_MORE,
+    HAVE_CHILDREN_AND_DONT_WANT_MORE,
+    NOT_SURE_YET
+}
+
+enum MaritalStatus {
+    UNMARRIED,
+    DIVORCED_THROUGH_COURT,
+    DIVORCED_NOT_THROUGH_COURT,
+    WIDOW
+}
+
+enum Gender {
+    MALE,
+    FEMALE
+}
+
+
+relationship OneToOne {
+    Profile {location} to Location
+}
+
+relationship ManyToMany {
+    Profile {genderTags} to GenderTag
+}
+
+relationship OneToMany {
+    Profile {contactInfos} to ContactInfo {profile}
+}
+
+relationship ManyToOne {
+    Profile {discoverability} to ProfileDiscoverability
+}
+
+relationship ManyToOne {
+    Profile {nationality(id)} to Nationality
+}
+
+relationship OneToMany {
+    Profile {attachments} to Attachment
+}
+
+
+dto Profile with mapstruct
+dto Attachment with mapstruct
+dto ProfileDiscoverability with mapstruct
+dto GenderTag with mapstruct
+dto Location with mapstruct
+dto Nationality with mapstruct
+dto ContactInfo with mapstruct
+
+service Profile with serviceClass
+service Attachment with serviceClass
+service ProfileDiscoverability with serviceClass
+service GenderTag with serviceClass
+service Location with serviceClass
+service Nationality with serviceClass
+service ContactInfo with serviceClass
+
+paginate Profile with infinite-scroll
+paginate Attachment with infinite-scroll
+paginate ProfileDiscoverability with infinite-scroll
+paginate GenderTag with infinite-scroll
+paginate Location with infinite-scroll
+aginate Nationality with infinite-scroll
+paginate ContactInfo with infinite-scroll
