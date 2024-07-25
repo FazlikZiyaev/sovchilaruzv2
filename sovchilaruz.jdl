@@ -207,5 +207,5 @@ paginate Attachment with infinite-scroll
 paginate ProfileDiscoverability with infinite-scroll
 paginate GenderTag with infinite-scroll
 paginate Location with infinite-scroll
-aginate Nationality with infinite-scroll
+paginate Nationality with infinite-scroll
 paginate ContactInfo with infinite-scroll
