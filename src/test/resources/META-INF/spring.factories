@@ -1,0 +1,4 @@
+org.springframework.test.context.ContextCustomizerFactory = uz.devops.\
+    sovchilaruzv2.config.SqlTestContainersSpringContextCustomizerFactory,uz.\
+    devops.sovchilaruzv2.config.\
+    RedisTestContainersSpringContextCustomizerFactory
