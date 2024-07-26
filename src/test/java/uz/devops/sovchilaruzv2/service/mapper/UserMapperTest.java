@@ -2,10 +2,7 @@ package uz.devops.sovchilaruzv2.service.mapper;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +16,7 @@ import uz.devops.sovchilaruzv2.service.dto.UserDTO;
 class UserMapperTest {
 
     private static final String DEFAULT_LOGIN = "johndoe";
-    private static final Long DEFAULT_ID = 1L;
+    private static final UUID DEFAULT_ID = UUID.fromString("69f98bd2-92d2-4c7d-a53c-21a322366d85");
 
     private UserMapper userMapper;
     private User user;
