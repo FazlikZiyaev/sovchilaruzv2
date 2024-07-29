@@ -20,11 +20,16 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwsHeader;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.web.bind.annotation.*;
+import uz.devops.sovchilaruzv2.domain.User;
+import uz.devops.sovchilaruzv2.repository.UserRepository;
+import uz.devops.sovchilaruzv2.service.InvalidPasswordException;
 import uz.devops.sovchilaruzv2.web.rest.vm.LoginVM;
 
 /**
@@ -37,6 +42,8 @@ public class AuthenticateController {
     private final Logger log = LoggerFactory.getLogger(AuthenticateController.class);
 
     private final JwtEncoder jwtEncoder;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Value("${jhipster.security.authentication.jwt.token-validity-in-seconds:0}")
     private long tokenValidityInSeconds;
@@ -46,9 +53,16 @@ public class AuthenticateController {
 
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    public AuthenticateController(JwtEncoder jwtEncoder, AuthenticationManagerBuilder authenticationManagerBuilder) {
+    public AuthenticateController(
+        JwtEncoder jwtEncoder,
+        AuthenticationManagerBuilder authenticationManagerBuilder,
+        UserRepository userRepository,
+        PasswordEncoder passwordEncoder
+    ) {
         this.jwtEncoder = jwtEncoder;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/authenticate")
@@ -58,9 +72,17 @@ public class AuthenticateController {
             loginVM.getPassword()
         );
 
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = this.createToken(authentication, loginVM.isRememberMe());
+        User user = userRepository
+            .findOneByLogin(loginVM.getUsername())
+            .orElseThrow(() -> new UsernameNotFoundException("Invalid argument is passed! Username is not found!"));
+
+        if (!passwordEncoder.matches(loginVM.getPassword(), user.getPassword())) {
+            log.warn("Invalid argument is passed! Password not valid! Credentials: {}", loginVM);
+            throw new InvalidPasswordException();
+        }
+
+        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+        String jwt = this.createToken(authenticationToken, loginVM.isRememberMe());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setBearerAuth(jwt);
         return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
