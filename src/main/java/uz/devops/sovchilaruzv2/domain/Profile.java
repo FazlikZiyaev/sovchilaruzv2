@@ -141,6 +141,14 @@ public class Profile implements Serializable {
     @OneToOne(mappedBy = "profile")
     private User user;
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @JsonIgnoreProperties(value = { "profile" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)

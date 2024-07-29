@@ -1,5 +1,8 @@
 package uz.devops.sovchilaruzv2.service;
 
+import io.undertow.util.BadRequestException;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Optional;
 import java.util.UUID;
 import org.slf4j.Logger;
@@ -12,6 +15,7 @@ import uz.devops.sovchilaruzv2.domain.Profile;
 import uz.devops.sovchilaruzv2.repository.ProfileRepository;
 import uz.devops.sovchilaruzv2.service.dto.ProfileDTO;
 import uz.devops.sovchilaruzv2.service.mapper.ProfileMapper;
+import uz.devops.sovchilaruzv2.web.rest.errors.CustomBadRequestException;
 
 /**
  * Service Implementation for managing {@link uz.devops.sovchilaruzv2.domain.Profile}.
@@ -38,10 +42,31 @@ public class ProfileService {
      * @return the persisted entity.
      */
     public ProfileDTO save(ProfileDTO profileDTO) {
+        validateProfile(profileDTO);
         log.debug("Request to save Profile : {}", profileDTO);
         Profile profile = profileMapper.toEntity(profileDTO);
         profile = profileRepository.save(profile);
         return profileMapper.toDto(profile);
+    }
+
+    private void validateProfile(ProfileDTO profileDTO) {
+        LocalDate dateOfBirth = profileDTO.getDateOfBirth();
+        if (profileDTO.getUserId() == null) {
+            throw new IllegalArgumentException("User id mast be not null");
+        }
+        if (dateOfBirth == null) {
+            throw new IllegalArgumentException("Date of birth cannot be null");
+        }
+
+        LocalDate today = LocalDate.now();
+        int age = Period.between(dateOfBirth, today).getYears();
+
+        if (age < 18) {
+            throw new CustomBadRequestException("User must be at least 18 years old");
+        }
+        if (!profileDTO.getIsHealthy() && profileDTO.getHealthIssues() == null) {
+            throw new CustomBadRequestException("If user is not healthy healthyIssues mast be not null");
+        }
     }
 
     /**

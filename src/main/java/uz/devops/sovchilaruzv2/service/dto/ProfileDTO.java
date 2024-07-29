@@ -22,6 +22,9 @@ public class ProfileDTO implements Serializable {
     private UUID id;
 
     @NotNull
+    private UUID userId;
+
+    @NotNull
     private Gender gender;
 
     @NotNull
@@ -87,6 +90,14 @@ public class ProfileDTO implements Serializable {
 
     @Size(max = 256)
     private String skills;
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
+    }
 
     @Size(max = 400)
     private String bio;

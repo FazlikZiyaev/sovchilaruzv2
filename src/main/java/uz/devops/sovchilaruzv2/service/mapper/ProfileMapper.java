@@ -1,31 +1,30 @@
 package uz.devops.sovchilaruzv2.service.mapper;
 
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import org.mapstruct.*;
-import uz.devops.sovchilaruzv2.domain.GenderTag;
-import uz.devops.sovchilaruzv2.domain.Location;
-import uz.devops.sovchilaruzv2.domain.Nationality;
-import uz.devops.sovchilaruzv2.domain.Profile;
-import uz.devops.sovchilaruzv2.domain.ProfileDiscoverability;
-import uz.devops.sovchilaruzv2.service.dto.GenderTagDTO;
-import uz.devops.sovchilaruzv2.service.dto.LocationDTO;
-import uz.devops.sovchilaruzv2.service.dto.NationalityDTO;
-import uz.devops.sovchilaruzv2.service.dto.ProfileDTO;
-import uz.devops.sovchilaruzv2.service.dto.ProfileDiscoverabilityDTO;
+import uz.devops.sovchilaruzv2.domain.*;
+import uz.devops.sovchilaruzv2.repository.UserRepository;
+import uz.devops.sovchilaruzv2.service.dto.*;
 
 /**
  * Mapper for the entity {@link Profile} and its DTO {@link ProfileDTO}.
  */
-@Mapper(componentModel = "spring")
+@Mapper(
+    componentModel = "spring",
+    uses = { LocationMapper.class, ProfileDiscoverabilityMapper.class, NationalityMapper.class, GenderTagMapper.class }
+)
 public interface ProfileMapper extends EntityMapper<ProfileDTO, Profile> {
     @Mapping(target = "location", source = "location", qualifiedByName = "locationId")
     @Mapping(target = "discoverability", source = "discoverability", qualifiedByName = "profileDiscoverabilityId")
     @Mapping(target = "nationality", source = "nationality", qualifiedByName = "nationalityId")
     @Mapping(target = "genderTags", source = "genderTags", qualifiedByName = "genderTagIdSet")
+    @Mapping(target = "userId", source = "user", qualifiedByName = "userToUserId")
     ProfileDTO toDto(Profile s);
 
     @Mapping(target = "removeGenderTags", ignore = true)
+    @Mapping(target = "user", source = "userId", qualifiedByName = "userIdToUser")
     Profile toEntity(ProfileDTO profileDTO);
 
     @Named("locationId")
@@ -51,5 +50,18 @@ public interface ProfileMapper extends EntityMapper<ProfileDTO, Profile> {
     @Named("genderTagIdSet")
     default Set<GenderTagDTO> toDtoGenderTagIdSet(Set<GenderTag> genderTag) {
         return genderTag.stream().map(this::toDtoGenderTagId).collect(Collectors.toSet());
+    }
+
+    @Named("userIdToUser")
+    default User userIdToUser(UUID userId, @Context UserRepository userRepository) {
+        if (userId == null) {
+            return null;
+        }
+        return userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+    }
+
+    @Named("userToUserId")
+    default UUID userToUserId(User user) {
+        return user != null ? user.getId() : null;
     }
 }

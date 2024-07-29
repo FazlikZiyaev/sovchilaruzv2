@@ -3,11 +3,13 @@ package uz.devops.sovchilaruzv2.service.mapper;
 import java.util.*;
 import java.util.stream.Collectors;
 import org.mapstruct.BeanMapping;
+import org.mapstruct.Context;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 import org.springframework.stereotype.Service;
 import uz.devops.sovchilaruzv2.domain.Authority;
 import uz.devops.sovchilaruzv2.domain.User;
+import uz.devops.sovchilaruzv2.repository.UserRepository;
 import uz.devops.sovchilaruzv2.service.dto.AdminUserDTO;
 import uz.devops.sovchilaruzv2.service.dto.UserDTO;
 
@@ -143,5 +145,18 @@ public class UserMapper {
         }
 
         return userSet;
+    }
+
+    @Named("userIdToUser")
+    User userIdToUser(UUID userId, @Context UserRepository userRepository) {
+        if (userId == null) {
+            return null;
+        }
+        return userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+    }
+
+    @Named("userToUserId")
+    UUID userToUserId(User user) {
+        return user != null ? user.getId() : null;
     }
 }
