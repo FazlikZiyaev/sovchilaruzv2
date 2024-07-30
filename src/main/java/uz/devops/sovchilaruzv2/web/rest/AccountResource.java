@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import uz.devops.sovchilaruzv2.domain.User;
+import uz.devops.sovchilaruzv2.otp.OTPService;
 import uz.devops.sovchilaruzv2.repository.UserRepository;
 import uz.devops.sovchilaruzv2.security.SecurityUtils;
 import uz.devops.sovchilaruzv2.service.MailService;
@@ -40,10 +41,13 @@ public class AccountResource {
 
     private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    private final OTPService otpService;
+
+    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, OTPService otpService) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
+        this.otpService = otpService;
     }
 
     /**
@@ -61,7 +65,13 @@ public class AccountResource {
             throw new InvalidPasswordException();
         }
         User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
-        mailService.sendActivationEmail(user);
+        otpService.generateAndSaveOTP(user.getLogin());
+        //        mailService.sendActivationEmail(user);
+    }
+
+    @GetMapping("/verify")
+    public void verifyOtp(@RequestParam(value = "login") String login, @RequestParam(value = "otp") String otp) {
+        otpService.verifyOTP(login, otp);
     }
 
     /**
