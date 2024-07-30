@@ -4,6 +4,7 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import uz.devops.sovchilaruzv2.domain.enumeration.OTPMode;
 import uz.devops.sovchilaruzv2.repository.OTPRepository;
 
 @Component
@@ -13,8 +14,8 @@ public class OTPRepositoryImpl implements OTPRepository {
     private RedisTemplate<String, Object> redisTemplate;
 
     @Override
-    public String generateOTP() {
-        return String.valueOf(new Random().nextInt(9000) + 1000);
+    public String generateOTP(OTPMode mode) {
+        return mode == OTPMode.PROD_MODE ? String.valueOf(new Random().nextInt(9000) + 1000) : "1234";
     }
 
     @Override

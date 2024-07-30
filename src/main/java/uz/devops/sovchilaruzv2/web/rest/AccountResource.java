@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import uz.devops.sovchilaruzv2.domain.User;
+import uz.devops.sovchilaruzv2.domain.enumeration.OTPMode;
 import uz.devops.sovchilaruzv2.repository.UserRepository;
 import uz.devops.sovchilaruzv2.security.SecurityUtils;
 import uz.devops.sovchilaruzv2.service.MailService;
@@ -58,6 +59,7 @@ public class AccountResource {
      * @throws EmailAlreadyUsedException {@code 400 (Bad Request)} if the email is already used.
      * @throws LoginAlreadyUsedException {@code 400 (Bad Request)} if the login is already used.
      */
+    // !!! todo make one endpoint for two modes !!!
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public void registerAccount(@Valid @RequestBody ManagedUserVM managedUserVM) {
@@ -65,7 +67,18 @@ public class AccountResource {
             throw new InvalidPasswordException();
         }
         User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
-        otpService.generateAndSaveOTP(user.getLogin());
+        otpService.generateAndSaveOTP(user.getLogin(), OTPMode.PROD_MODE);
+        //        mailService.sendActivationEmail(user);
+    }
+
+    @PostMapping("/register/dev")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void registerAccountDev(@Valid @RequestBody ManagedUserVM managedUserVM) {
+        if (isPasswordLengthInvalid(managedUserVM.getPassword())) {
+            throw new InvalidPasswordException();
+        }
+        User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
+        otpService.generateAndSaveOTP(user.getLogin(), OTPMode.DEV_MODE);
         //        mailService.sendActivationEmail(user);
     }
 

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import uz.devops.sovchilaruzv2.domain.User;
+import uz.devops.sovchilaruzv2.domain.enumeration.OTPMode;
 import uz.devops.sovchilaruzv2.repository.UserRepository;
 import uz.devops.sovchilaruzv2.repository.impl.OTPRepositoryImpl;
 
@@ -20,8 +21,8 @@ public class OTPService {
     private final UserRepository userRepository;
     private final CacheManager cacheManager;
 
-    public void generateAndSaveOTP(String login) {
-        String otp = otpRepositoryImpl.generateOTP();
+    public void generateAndSaveOTP(String login, OTPMode mode) {
+        String otp = otpRepositoryImpl.generateOTP(mode);
         otpRepositoryImpl.saveOTP(login, otp);
 
         log.debug("Generating and Saving otp... result is {}", otp);
