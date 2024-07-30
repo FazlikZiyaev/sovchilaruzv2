@@ -1,10 +1,10 @@
-package uz.devops.sovchilaruzv2.otp;
+package uz.devops.sovchilaruzv2.repository.impl;
 
 import java.util.Random;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import uz.devops.sovchilaruzv2.repository.OTPRepository;
 
 @Component
 public class OTPRepositoryImpl implements OTPRepository {

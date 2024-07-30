@@ -1,4 +1,4 @@
-package uz.devops.sovchilaruzv2.otp;
+package uz.devops.sovchilaruzv2.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

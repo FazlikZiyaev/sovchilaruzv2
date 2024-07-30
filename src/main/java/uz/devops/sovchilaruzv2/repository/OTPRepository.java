@@ -1,4 +1,4 @@
-package uz.devops.sovchilaruzv2.otp;
+package uz.devops.sovchilaruzv2.repository;
 
 import org.springframework.stereotype.Repository;
 

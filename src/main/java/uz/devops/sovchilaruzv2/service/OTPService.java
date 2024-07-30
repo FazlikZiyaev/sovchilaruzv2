@@ -1,4 +1,4 @@
-package uz.devops.sovchilaruzv2.otp;
+package uz.devops.sovchilaruzv2.service;
 
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import uz.devops.sovchilaruzv2.domain.User;
 import uz.devops.sovchilaruzv2.repository.UserRepository;
+import uz.devops.sovchilaruzv2.repository.impl.OTPRepositoryImpl;
 
 @Service
 @RequiredArgsConstructor
