@@ -11,7 +11,7 @@
     -->
     <changeSet id="20240725153235-1" author="jhipster">
         <createTable tableName="profile_discoverability">
-            <column name="id" type="bigint">
+            <column name="id" type="${uuidType}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="marital_status" type="varchar(255)">
@@ -46,7 +46,7 @@
                   separator=";"
                   tableName="profile_discoverability"
                   usePreparedStatements="true">
-            <column name="id" type="numeric"/>
+            <column name="id" type="${uuidType}"/>
             <column name="marital_status" type="string"/>
             <column name="max_age" type="numeric"/>
             <column name="min_age" type="numeric"/>

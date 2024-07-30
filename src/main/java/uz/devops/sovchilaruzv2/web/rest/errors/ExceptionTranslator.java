@@ -59,6 +59,11 @@ public class ExceptionTranslator extends ResponseEntityExceptionHandler {
         return handleExceptionInternal((Exception) ex, pdCause, buildHeaders(ex), HttpStatusCode.valueOf(pdCause.getStatus()), request);
     }
 
+    @ExceptionHandler
+    public ResponseEntity<String> handeBadRequestException(CustomBadRequestException e) {
+        return ResponseEntity.status(400).body(e.getMessage());
+    }
+
     @Nullable
     @Override
     protected ResponseEntity<Object> handleExceptionInternal(

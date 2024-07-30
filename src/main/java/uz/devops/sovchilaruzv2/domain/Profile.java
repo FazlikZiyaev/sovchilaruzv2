@@ -15,6 +15,7 @@ import uz.devops.sovchilaruzv2.domain.enumeration.Education;
 import uz.devops.sovchilaruzv2.domain.enumeration.Gender;
 import uz.devops.sovchilaruzv2.domain.enumeration.MaritalStatus;
 import uz.devops.sovchilaruzv2.domain.enumeration.ProfileState;
+import uz.devops.sovchilaruzv2.service.UserService;
 
 /**
  * A Profile.
@@ -141,14 +142,6 @@ public class Profile implements Serializable {
     @OneToOne(mappedBy = "profile")
     private User user;
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     @JsonIgnoreProperties(value = { "profile" }, allowSetters = true)
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
@@ -193,6 +186,19 @@ public class Profile implements Serializable {
 
     public void setId(UUID id) {
         this.id = id;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Profile user(User user) {
+        this.setUser(user);
+        return this;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Gender getGender() {

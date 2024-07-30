@@ -2,6 +2,7 @@ package uz.devops.sovchilaruzv2.service.mapper;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Context;
 import org.mapstruct.Mapping;
@@ -20,7 +21,10 @@ import uz.devops.sovchilaruzv2.service.dto.UserDTO;
  * support is still in beta, and requires a manual step with an IDE.
  */
 @Service
+@RequiredArgsConstructor
 public class UserMapper {
+
+    private final UserRepository userRepository;
 
     public List<UserDTO> usersToUserDTOs(List<User> users) {
         return users.stream().filter(Objects::nonNull).map(this::userToUserDTO).toList();
@@ -148,7 +152,7 @@ public class UserMapper {
     }
 
     @Named("userIdToUser")
-    User userIdToUser(UUID userId, @Context UserRepository userRepository) {
+    User userIdToUser(UUID userId) {
         if (userId == null) {
             return null;
         }

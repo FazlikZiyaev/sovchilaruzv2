@@ -7,6 +7,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -84,7 +85,7 @@ public class ProfileDiscoverabilityResource {
      */
     @PutMapping("/{id}")
     public ResponseEntity<ProfileDiscoverabilityDTO> updateProfileDiscoverability(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "id", required = false) final UUID id,
         @Valid @RequestBody ProfileDiscoverabilityDTO profileDiscoverabilityDTO
     ) throws URISyntaxException {
         log.debug("REST request to update ProfileDiscoverability : {}, {}", id, profileDiscoverabilityDTO);
@@ -119,7 +120,7 @@ public class ProfileDiscoverabilityResource {
      */
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<ProfileDiscoverabilityDTO> partialUpdateProfileDiscoverability(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "id", required = false) final UUID id,
         @NotNull @RequestBody ProfileDiscoverabilityDTO profileDiscoverabilityDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update ProfileDiscoverability partially : {}, {}", id, profileDiscoverabilityDTO);
@@ -165,7 +166,7 @@ public class ProfileDiscoverabilityResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the profileDiscoverabilityDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<ProfileDiscoverabilityDTO> getProfileDiscoverability(@PathVariable Long id) {
+    public ResponseEntity<ProfileDiscoverabilityDTO> getProfileDiscoverability(@PathVariable UUID id) {
         log.debug("REST request to get ProfileDiscoverability : {}", id);
         Optional<ProfileDiscoverabilityDTO> profileDiscoverabilityDTO = profileDiscoverabilityService.findOne(id);
         return ResponseUtil.wrapOrNotFound(profileDiscoverabilityDTO);
@@ -178,7 +179,7 @@ public class ProfileDiscoverabilityResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProfileDiscoverability(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteProfileDiscoverability(@PathVariable UUID id) {
         log.debug("REST request to delete ProfileDiscoverability : {}", id);
         profileDiscoverabilityService.delete(id);
         return ResponseEntity

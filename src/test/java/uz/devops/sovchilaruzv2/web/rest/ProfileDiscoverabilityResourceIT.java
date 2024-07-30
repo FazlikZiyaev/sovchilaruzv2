@@ -8,6 +8,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import jakarta.persistence.EntityManager;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -48,7 +49,7 @@ class ProfileDiscoverabilityResourceIT {
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
     private static Random random = new Random();
-    private static AtomicLong longCount = new AtomicLong(random.nextInt() + (2 * Integer.MAX_VALUE));
+    private static UUID id = UUID.randomUUID();
 
     @Autowired
     private ProfileDiscoverabilityRepository profileDiscoverabilityRepository;
@@ -127,7 +128,7 @@ class ProfileDiscoverabilityResourceIT {
     @Transactional
     void createProfileDiscoverabilityWithExistingId() throws Exception {
         // Create the ProfileDiscoverability with an existing ID
-        profileDiscoverability.setId(1L);
+        profileDiscoverability.setId(UUID.randomUUID());
         ProfileDiscoverabilityDTO profileDiscoverabilityDTO = profileDiscoverabilityMapper.toDto(profileDiscoverability);
 
         int databaseSizeBeforeCreate = profileDiscoverabilityRepository.findAll().size();
@@ -157,7 +158,7 @@ class ProfileDiscoverabilityResourceIT {
             .perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(profileDiscoverability.getId().intValue())))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(profileDiscoverability.getId().toString())))
             .andExpect(jsonPath("$.[*].maritalStatus").value(hasItem(DEFAULT_MARITAL_STATUS.toString())))
             .andExpect(jsonPath("$.[*].maxAge").value(hasItem(DEFAULT_MAX_AGE)))
             .andExpect(jsonPath("$.[*].minAge").value(hasItem(DEFAULT_MIN_AGE)))
@@ -175,7 +176,7 @@ class ProfileDiscoverabilityResourceIT {
             .perform(get(ENTITY_API_URL_ID, profileDiscoverability.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(profileDiscoverability.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(profileDiscoverability.getId().toString()))
             .andExpect(jsonPath("$.maritalStatus").value(DEFAULT_MARITAL_STATUS.toString()))
             .andExpect(jsonPath("$.maxAge").value(DEFAULT_MAX_AGE))
             .andExpect(jsonPath("$.minAge").value(DEFAULT_MIN_AGE))
@@ -186,7 +187,7 @@ class ProfileDiscoverabilityResourceIT {
     @Transactional
     void getNonExistingProfileDiscoverability() throws Exception {
         // Get the profileDiscoverability
-        restProfileDiscoverabilityMockMvc.perform(get(ENTITY_API_URL_ID, Long.MAX_VALUE)).andExpect(status().isNotFound());
+        restProfileDiscoverabilityMockMvc.perform(get(ENTITY_API_URL_ID, UUID.randomUUID())).andExpect(status().isNotFound());
     }
 
     @Test
@@ -232,7 +233,7 @@ class ProfileDiscoverabilityResourceIT {
     @Transactional
     void putNonExistingProfileDiscoverability() throws Exception {
         int databaseSizeBeforeUpdate = profileDiscoverabilityRepository.findAll().size();
-        profileDiscoverability.setId(longCount.incrementAndGet());
+        profileDiscoverability.setId(id);
 
         // Create the ProfileDiscoverability
         ProfileDiscoverabilityDTO profileDiscoverabilityDTO = profileDiscoverabilityMapper.toDto(profileDiscoverability);
@@ -255,7 +256,7 @@ class ProfileDiscoverabilityResourceIT {
     @Transactional
     void putWithIdMismatchProfileDiscoverability() throws Exception {
         int databaseSizeBeforeUpdate = profileDiscoverabilityRepository.findAll().size();
-        profileDiscoverability.setId(longCount.incrementAndGet());
+        profileDiscoverability.setId(id);
 
         // Create the ProfileDiscoverability
         ProfileDiscoverabilityDTO profileDiscoverabilityDTO = profileDiscoverabilityMapper.toDto(profileDiscoverability);
@@ -263,7 +264,7 @@ class ProfileDiscoverabilityResourceIT {
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restProfileDiscoverabilityMockMvc
             .perform(
-                put(ENTITY_API_URL_ID, longCount.incrementAndGet())
+                put(ENTITY_API_URL_ID, id)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(TestUtil.convertObjectToJsonBytes(profileDiscoverabilityDTO))
             )
@@ -278,7 +279,7 @@ class ProfileDiscoverabilityResourceIT {
     @Transactional
     void putWithMissingIdPathParamProfileDiscoverability() throws Exception {
         int databaseSizeBeforeUpdate = profileDiscoverabilityRepository.findAll().size();
-        profileDiscoverability.setId(longCount.incrementAndGet());
+        profileDiscoverability.setId(id);
 
         // Create the ProfileDiscoverability
         ProfileDiscoverabilityDTO profileDiscoverabilityDTO = profileDiscoverabilityMapper.toDto(profileDiscoverability);
@@ -369,7 +370,7 @@ class ProfileDiscoverabilityResourceIT {
     @Transactional
     void patchNonExistingProfileDiscoverability() throws Exception {
         int databaseSizeBeforeUpdate = profileDiscoverabilityRepository.findAll().size();
-        profileDiscoverability.setId(longCount.incrementAndGet());
+        profileDiscoverability.setId(id);
 
         // Create the ProfileDiscoverability
         ProfileDiscoverabilityDTO profileDiscoverabilityDTO = profileDiscoverabilityMapper.toDto(profileDiscoverability);
@@ -392,7 +393,7 @@ class ProfileDiscoverabilityResourceIT {
     @Transactional
     void patchWithIdMismatchProfileDiscoverability() throws Exception {
         int databaseSizeBeforeUpdate = profileDiscoverabilityRepository.findAll().size();
-        profileDiscoverability.setId(longCount.incrementAndGet());
+        profileDiscoverability.setId(id);
 
         // Create the ProfileDiscoverability
         ProfileDiscoverabilityDTO profileDiscoverabilityDTO = profileDiscoverabilityMapper.toDto(profileDiscoverability);
@@ -400,7 +401,7 @@ class ProfileDiscoverabilityResourceIT {
         // If url ID doesn't match entity ID, it will throw BadRequestAlertException
         restProfileDiscoverabilityMockMvc
             .perform(
-                patch(ENTITY_API_URL_ID, longCount.incrementAndGet())
+                patch(ENTITY_API_URL_ID, id)
                     .contentType("application/merge-patch+json")
                     .content(TestUtil.convertObjectToJsonBytes(profileDiscoverabilityDTO))
             )
@@ -415,7 +416,7 @@ class ProfileDiscoverabilityResourceIT {
     @Transactional
     void patchWithMissingIdPathParamProfileDiscoverability() throws Exception {
         int databaseSizeBeforeUpdate = profileDiscoverabilityRepository.findAll().size();
-        profileDiscoverability.setId(longCount.incrementAndGet());
+        profileDiscoverability.setId(id);
 
         // Create the ProfileDiscoverability
         ProfileDiscoverabilityDTO profileDiscoverabilityDTO = profileDiscoverabilityMapper.toDto(profileDiscoverability);

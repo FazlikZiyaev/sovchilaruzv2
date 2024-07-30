@@ -13,13 +13,13 @@ import uz.devops.sovchilaruzv2.service.dto.*;
  */
 @Mapper(
     componentModel = "spring",
-    uses = { LocationMapper.class, ProfileDiscoverabilityMapper.class, NationalityMapper.class, GenderTagMapper.class }
+    uses = { LocationMapper.class, ProfileDiscoverabilityMapper.class, NationalityMapper.class, GenderTagMapper.class, UserMapper.class }
 )
 public interface ProfileMapper extends EntityMapper<ProfileDTO, Profile> {
     @Mapping(target = "location", source = "location", qualifiedByName = "locationId")
     @Mapping(target = "discoverability", source = "discoverability", qualifiedByName = "profileDiscoverabilityId")
     @Mapping(target = "nationality", source = "nationality", qualifiedByName = "nationalityId")
-    @Mapping(target = "genderTags", source = "genderTags", qualifiedByName = "genderTagIdSet")
+    @Mapping(target = "genderTags", source = "genderTags")
     @Mapping(target = "userId", source = "user", qualifiedByName = "userToUserId")
     ProfileDTO toDto(Profile s);
 
@@ -46,22 +46,21 @@ public interface ProfileMapper extends EntityMapper<ProfileDTO, Profile> {
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     GenderTagDTO toDtoGenderTagId(GenderTag genderTag);
+    //    @Named("genderTagIdSet")
+    //    default Set<GenderTagDTO> toDtoGenderTagIdSet(Set<GenderTag> genderTag) {
+    //        return genderTag.stream().map(this::toDtoGenderTagId).collect(Collectors.toSet());
+    //    }
 
-    @Named("genderTagIdSet")
-    default Set<GenderTagDTO> toDtoGenderTagIdSet(Set<GenderTag> genderTag) {
-        return genderTag.stream().map(this::toDtoGenderTagId).collect(Collectors.toSet());
-    }
-
-    @Named("userIdToUser")
-    default User userIdToUser(UUID userId, @Context UserRepository userRepository) {
-        if (userId == null) {
-            return null;
-        }
-        return userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
-    }
-
-    @Named("userToUserId")
-    default UUID userToUserId(User user) {
-        return user != null ? user.getId() : null;
-    }
+    //    @Named("userIdToUser")
+    //    default User userIdToUser(UUID userId, @Context UserRepository userRepository) {
+    //        if (userId == null) {
+    //            return null;
+    //        }
+    //        return userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("User not found with id: " + userId));
+    //    }
+    //
+    //    @Named("userToUserId")
+    //    default UUID userToUserId(User user) {
+    //        return user != null ? user.getId() : null;
+    //    }
 }
