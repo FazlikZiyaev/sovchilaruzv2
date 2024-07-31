@@ -31,6 +31,7 @@
     <include file="config/liquibase/changelog/20240725153335_added_entity_constraints_Attachment.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240725220900_added_column_User.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240730112201_added_column_attachment.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20243107122900_fk_user_and_attachment.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

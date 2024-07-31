@@ -15,7 +15,6 @@ import uz.devops.sovchilaruzv2.service.dto.ProfileDTO;
 @Mapper(componentModel = "spring")
 public interface AttachmentMapper extends EntityMapper<AttachmentDTO, Attachment> {
     @Mapping(target = "profile", source = "profile", qualifiedByName = "profileId")
-    @Mapping(target = "extension", source = "extension")
     AttachmentDTO toDto(Attachment s);
 
     @Named("profileId")

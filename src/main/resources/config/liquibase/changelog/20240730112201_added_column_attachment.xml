@@ -8,6 +8,7 @@
     <changeSet id="20240725220900_added_column_User" author="${zafar}">
         <addColumn tableName="attachment">
             <column name="extension" type="varchar"/>
+            <column name="status" type="varchar"/>
         </addColumn>
     </changeSet>
 </databaseChangeLog>

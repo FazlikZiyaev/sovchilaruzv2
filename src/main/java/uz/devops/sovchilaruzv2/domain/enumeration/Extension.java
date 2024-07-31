@@ -6,8 +6,8 @@ import lombok.Getter;
 public enum Extension {
     JPG("image/jpg", ".jpg"),
     PNG("image/png", ".png"),
-    JPEG("image/jpeg", ".jpeg"),
-    ;
+    JPEG("image/jpeg", ".jpeg");
+
     private final String contentType;
     private final String extension;
 
@@ -17,11 +17,12 @@ public enum Extension {
     }
 
     public static Extension findExtensionType(String fileType) {
-        if (fileType.endsWith("png")) {
-            return Extension.PNG;
-        } else if (fileType.endsWith("jpg")) {
-            return Extension.JPG;
+        if (!fileType.startsWith(".")) {
+            fileType = "." + fileType;
         }
-        throw new RuntimeException("Unsupported file type: " + fileType);
+        for (Extension value : Extension.values()) {
+            if (value.getExtension().equals(fileType)) return value;
+        }
+        throw new IllegalArgumentException("Invalid extension type: " + fileType);
     }
 }

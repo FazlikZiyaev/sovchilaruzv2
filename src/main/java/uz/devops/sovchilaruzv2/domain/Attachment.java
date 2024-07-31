@@ -4,17 +4,17 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import java.io.Serializable;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import uz.devops.sovchilaruzv2.domain.enumeration.AttachmentStatus;
 import uz.devops.sovchilaruzv2.domain.enumeration.EntityState;
 import uz.devops.sovchilaruzv2.domain.enumeration.Extension;
-
-import java.io.Serializable;
-import java.util.UUID;
 
 /**
  * A Attachment.
@@ -28,7 +28,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Accessors(chain = true)
 public class Attachment implements Serializable {
-    //todo enum qowiw verify qilindi rasimi ili yo kein rasimi upload qivokanda rasimga uuid generatsiya qilish
+
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -47,7 +47,7 @@ public class Attachment implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(
-        value = {"location", "contactInfos", "attachments", "discoverability", "nationality", "genderTags"},
+        value = { "location", "contactInfos", "attachments", "discoverability", "nationality", "genderTags" },
         allowSetters = true
     )
     private Profile profile;
@@ -55,6 +55,31 @@ public class Attachment implements Serializable {
     @Enumerated(EnumType.STRING)
     @Column(name = "extension")
     private Extension extension;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private AttachmentStatus status;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @JsonIgnoreProperties(value = "attachments", allowSetters = true)
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public AttachmentStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AttachmentStatus status) {
+        this.status = status;
+    }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 

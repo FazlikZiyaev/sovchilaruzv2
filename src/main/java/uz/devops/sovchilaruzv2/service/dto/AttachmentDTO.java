@@ -2,12 +2,13 @@ package uz.devops.sovchilaruzv2.service.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import uz.devops.sovchilaruzv2.domain.enumeration.EntityState;
-import uz.devops.sovchilaruzv2.domain.enumeration.Extension;
-
 import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
+import uz.devops.sovchilaruzv2.domain.User;
+import uz.devops.sovchilaruzv2.domain.enumeration.AttachmentStatus;
+import uz.devops.sovchilaruzv2.domain.enumeration.EntityState;
+import uz.devops.sovchilaruzv2.domain.enumeration.Extension;
 
 /**
  * A DTO for the {@link uz.devops.sovchilaruzv2.domain.Attachment} entity.
@@ -23,9 +24,29 @@ public class AttachmentDTO implements Serializable {
 
     private EntityState state;
 
+    private AttachmentStatus status;
+
     private ProfileDTO profile;
 
     private Extension extension;
+
+    private User user;
+
+    public AttachmentStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(AttachmentStatus status) {
+        this.status = status;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Extension getExtension() {
         return extension;
