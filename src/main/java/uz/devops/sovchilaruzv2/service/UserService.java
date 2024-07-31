@@ -124,8 +124,7 @@ public class UserService {
         newUser.setLangKey(userDTO.getLangKey());
 
         // new user is not active
-        //        newUser.setActivated(false);
-        newUser.setActivated(true);
+        newUser.setActivated(false);
 
         // new user gets registration key
         //        newUser.setActivationKey(RandomUtil.generateActivationKey());
@@ -135,7 +134,7 @@ public class UserService {
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
-        this.clearUserCaches(newUser);
+        //        this.clearUserCaches(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
     }

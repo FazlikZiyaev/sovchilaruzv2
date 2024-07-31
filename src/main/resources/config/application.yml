@@ -210,3 +210,7 @@ jhipster:
 # ===================================================================
 
 # application:
+otp:
+  sms:
+    smsCodeExpireTime: 300 # In seconds
+    smsCodeResendLimit: 2
