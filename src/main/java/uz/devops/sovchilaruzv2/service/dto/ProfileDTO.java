@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
+import lombok.Data;
+import uz.devops.sovchilaruzv2.domain.GenderTag;
 import uz.devops.sovchilaruzv2.domain.enumeration.ChildPlan;
 import uz.devops.sovchilaruzv2.domain.enumeration.Education;
 import uz.devops.sovchilaruzv2.domain.enumeration.Gender;
@@ -17,9 +19,13 @@ import uz.devops.sovchilaruzv2.domain.enumeration.ProfileState;
  * A DTO for the {@link uz.devops.sovchilaruzv2.domain.Profile} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
+@Data
 public class ProfileDTO implements Serializable {
 
     private UUID id;
+
+    @NotNull
+    private UUID userId;
 
     @NotNull
     private Gender gender;
@@ -102,247 +108,7 @@ public class ProfileDTO implements Serializable {
 
     private NationalityDTO nationality;
 
-    private Set<GenderTagDTO> genderTags = new HashSet<>();
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public Double getHeight() {
-        return height;
-    }
-
-    public void setHeight(Double height) {
-        this.height = height;
-    }
-
-    public Double getWeight() {
-        return weight;
-    }
-
-    public void setWeight(Double weight) {
-        this.weight = weight;
-    }
-
-    public Education getEducation() {
-        return education;
-    }
-
-    public void setEducation(Education education) {
-        this.education = education;
-    }
-
-    public String getProfession() {
-        return profession;
-    }
-
-    public void setProfession(String profession) {
-        this.profession = profession;
-    }
-
-    public String getWorkPlace() {
-        return workPlace;
-    }
-
-    public void setWorkPlace(String workPlace) {
-        this.workPlace = workPlace;
-    }
-
-    public Boolean getIsHealthy() {
-        return isHealthy;
-    }
-
-    public void setIsHealthy(Boolean isHealthy) {
-        this.isHealthy = isHealthy;
-    }
-
-    public String getHealthIssues() {
-        return healthIssues;
-    }
-
-    public void setHealthIssues(String healthIssues) {
-        this.healthIssues = healthIssues;
-    }
-
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
-
-    public void setDateOfBirth(LocalDate dateOfBirth) {
-        this.dateOfBirth = dateOfBirth;
-    }
-
-    public String getPlaceOfBirth() {
-        return placeOfBirth;
-    }
-
-    public void setPlaceOfBirth(String placeOfBirth) {
-        this.placeOfBirth = placeOfBirth;
-    }
-
-    public MaritalStatus getMaritalStatus() {
-        return maritalStatus;
-    }
-
-    public void setMaritalStatus(MaritalStatus maritalStatus) {
-        this.maritalStatus = maritalStatus;
-    }
-
-    public ChildPlan getChildPlanInFuture() {
-        return childPlanInFuture;
-    }
-
-    public void setChildPlanInFuture(ChildPlan childPlanInFuture) {
-        this.childPlanInFuture = childPlanInFuture;
-    }
-
-    public Integer getNumOfMembersInFamily() {
-        return numOfMembersInFamily;
-    }
-
-    public void setNumOfMembersInFamily(Integer numOfMembersInFamily) {
-        this.numOfMembersInFamily = numOfMembersInFamily;
-    }
-
-    public Integer getNumOfChildrenInFamily() {
-        return numOfChildrenInFamily;
-    }
-
-    public void setNumOfChildrenInFamily(Integer numOfChildrenInFamily) {
-        this.numOfChildrenInFamily = numOfChildrenInFamily;
-    }
-
-    public Integer getBirthPositionInFamily() {
-        return birthPositionInFamily;
-    }
-
-    public void setBirthPositionInFamily(Integer birthPositionInFamily) {
-        this.birthPositionInFamily = birthPositionInFamily;
-    }
-
-    public Boolean getHasOwnDwelling() {
-        return hasOwnDwelling;
-    }
-
-    public void setHasOwnDwelling(Boolean hasOwnDwelling) {
-        this.hasOwnDwelling = hasOwnDwelling;
-    }
-
-    public Boolean getWantToStudy() {
-        return wantToStudy;
-    }
-
-    public void setWantToStudy(Boolean wantToStudy) {
-        this.wantToStudy = wantToStudy;
-    }
-
-    public Boolean getWantToWork() {
-        return wantToWork;
-    }
-
-    public void setWantToWork(Boolean wantToWork) {
-        this.wantToWork = wantToWork;
-    }
-
-    public Boolean getReadyToRelocate() {
-        return readyToRelocate;
-    }
-
-    public void setReadyToRelocate(Boolean readyToRelocate) {
-        this.readyToRelocate = readyToRelocate;
-    }
-
-    public String getKnowledgeOfLanguages() {
-        return knowledgeOfLanguages;
-    }
-
-    public void setKnowledgeOfLanguages(String knowledgeOfLanguages) {
-        this.knowledgeOfLanguages = knowledgeOfLanguages;
-    }
-
-    public String getSkills() {
-        return skills;
-    }
-
-    public void setSkills(String skills) {
-        this.skills = skills;
-    }
-
-    public String getBio() {
-        return bio;
-    }
-
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
-
-    public String getRequirements() {
-        return requirements;
-    }
-
-    public void setRequirements(String requirements) {
-        this.requirements = requirements;
-    }
-
-    public ProfileState getProfileState() {
-        return profileState;
-    }
-
-    public void setProfileState(ProfileState profileState) {
-        this.profileState = profileState;
-    }
-
-    public LocationDTO getLocation() {
-        return location;
-    }
-
-    public void setLocation(LocationDTO location) {
-        this.location = location;
-    }
-
-    public ProfileDiscoverabilityDTO getDiscoverability() {
-        return discoverability;
-    }
-
-    public void setDiscoverability(ProfileDiscoverabilityDTO discoverability) {
-        this.discoverability = discoverability;
-    }
-
-    public NationalityDTO getNationality() {
-        return nationality;
-    }
-
-    public void setNationality(NationalityDTO nationality) {
-        this.nationality = nationality;
-    }
-
-    public Set<GenderTagDTO> getGenderTags() {
-        return genderTags;
-    }
-
-    public void setGenderTags(Set<GenderTagDTO> genderTags) {
-        this.genderTags = genderTags;
-    }
+    private Set<GenderTag> genderTags = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
@@ -396,7 +162,6 @@ public class ProfileDTO implements Serializable {
             ", requirements='" + getRequirements() + "'" +
             ", profileState='" + getProfileState() + "'" +
             ", location=" + getLocation() +
-            ", discoverability=" + getDiscoverability() +
             ", nationality=" + getNationality() +
             ", genderTags=" + getGenderTags() +
             "}";

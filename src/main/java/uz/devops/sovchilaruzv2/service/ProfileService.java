@@ -1,7 +1,10 @@
 package uz.devops.sovchilaruzv2.service;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Optional;
 import java.util.UUID;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -9,15 +12,22 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uz.devops.sovchilaruzv2.domain.Profile;
+import uz.devops.sovchilaruzv2.domain.User;
+import uz.devops.sovchilaruzv2.repository.GenderTagRepository;
 import uz.devops.sovchilaruzv2.repository.ProfileRepository;
+import uz.devops.sovchilaruzv2.repository.UserRepository;
+import uz.devops.sovchilaruzv2.service.dto.GenderTagDTO;
 import uz.devops.sovchilaruzv2.service.dto.ProfileDTO;
 import uz.devops.sovchilaruzv2.service.mapper.ProfileMapper;
+import uz.devops.sovchilaruzv2.web.rest.errors.CustomBadRequestException;
+import uz.devops.sovchilaruzv2.web.rest.errors.DataNotFoundException;
 
 /**
  * Service Implementation for managing {@link uz.devops.sovchilaruzv2.domain.Profile}.
  */
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class ProfileService {
 
     private final Logger log = LoggerFactory.getLogger(ProfileService.class);
@@ -25,11 +35,8 @@ public class ProfileService {
     private final ProfileRepository profileRepository;
 
     private final ProfileMapper profileMapper;
-
-    public ProfileService(ProfileRepository profileRepository, ProfileMapper profileMapper) {
-        this.profileRepository = profileRepository;
-        this.profileMapper = profileMapper;
-    }
+    private final UserRepository userRepository;
+    private final GenderTagRepository genderTagRepository;
 
     /**
      * Save a profile.
@@ -38,10 +45,40 @@ public class ProfileService {
      * @return the persisted entity.
      */
     public ProfileDTO save(ProfileDTO profileDTO) {
+        validateProfile(profileDTO);
         log.debug("Request to save Profile : {}", profileDTO);
         Profile profile = profileMapper.toEntity(profileDTO);
         profile = profileRepository.save(profile);
+        User user = profile.getUser();
+        user.setProfile(profile);
+        userRepository.save(user);
         return profileMapper.toDto(profile);
+    }
+
+    private void validateProfile(ProfileDTO profileDTO) {
+        LocalDate dateOfBirth = profileDTO.getDateOfBirth();
+        if (profileDTO.getUserId() == null) {
+            throw new IllegalArgumentException("User id mast be not null");
+        }
+        User user = userRepository
+            .findById(profileDTO.getUserId())
+            .orElseThrow(() -> new DataNotFoundException("User not found with id: " + profileDTO.getUserId()));
+        if (user.getProfile() != null) {
+            throw new CustomBadRequestException("The user already has a profile");
+        }
+        if (dateOfBirth == null) {
+            throw new IllegalArgumentException("Date of birth cannot be null");
+        }
+
+        LocalDate today = LocalDate.now();
+        int age = Period.between(dateOfBirth, today).getYears();
+
+        if (age < 18) {
+            throw new CustomBadRequestException("User must be at least 18 years old");
+        }
+        if (!profileDTO.getIsHealthy() && profileDTO.getHealthIssues() == null) {
+            throw new CustomBadRequestException("If user is not healthy healthyIssues mast be not null");
+        }
     }
 
     /**
