@@ -1,25 +1,25 @@
-package uz.devops.sovchilaruzv2.repository.impl;
+package uz.devops.sovchilaruzv2.service.impl;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 import uz.devops.sovchilaruzv2.domain.enumeration.OTPMode;
-import uz.devops.sovchilaruzv2.repository.OTPRepository;
+import uz.devops.sovchilaruzv2.service.interfaces.OtpService;
 
 @Component
-public class OTPRepositoryImpl implements OTPRepository {
-
-    @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+@RequiredArgsConstructor
+@Slf4j
+public class OtpServiceImpl implements OtpService {
 
     private static final String OTP_COUNT_SUFFIX = ":otp_count";
 
+    private final RedisTemplate<String, Object> redisTemplate;
+
     @Override
-    public String generateOTP(OTPMode mode) {
+    public String generateOtp(OTPMode mode) {
         return mode == OTPMode.PROD_MODE ? String.valueOf(new Random().nextInt(9000) + 1000) : "1234";
     }
 
@@ -29,16 +29,16 @@ public class OTPRepositoryImpl implements OTPRepository {
     }
 
     @Override
-    public String saveOTP(String login, String otp) {
+    public String saveOTP(String login, String otp, int expirationTime) {
         redisTemplate.opsForValue().set(login, otp);
-        redisTemplate.expire(login, 2, TimeUnit.MINUTES);
+        redisTemplate.expire(login, expirationTime, TimeUnit.SECONDS);
         return getOTP(login);
     }
 
     @Override
     public Integer getOtpRequestCount(String login) {
-        Integer count = (Integer) redisTemplate.opsForValue().get(login + OTP_COUNT_SUFFIX);
-        return count == null ? 0 : count;
+        String countStr = (String) redisTemplate.opsForValue().get(login + OTP_COUNT_SUFFIX);
+        return countStr == null ? 0 : Integer.parseInt(countStr);
     }
 
     @Override

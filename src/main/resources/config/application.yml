@@ -210,5 +210,7 @@ jhipster:
 # ===================================================================
 
 # application:
-otp-service:
-  simulate: false
+otp:
+  sms:
+    smsCodeExpireTime: 300 # In seconds
+    smsCodeResendLimit: 2

@@ -12,10 +12,10 @@ import uz.devops.sovchilaruzv2.domain.enumeration.OTPMode;
 import uz.devops.sovchilaruzv2.repository.UserRepository;
 import uz.devops.sovchilaruzv2.security.SecurityUtils;
 import uz.devops.sovchilaruzv2.service.MailService;
-import uz.devops.sovchilaruzv2.service.OTPService;
 import uz.devops.sovchilaruzv2.service.UserService;
 import uz.devops.sovchilaruzv2.service.dto.AdminUserDTO;
 import uz.devops.sovchilaruzv2.service.dto.PasswordChangeDTO;
+import uz.devops.sovchilaruzv2.service.impl.OtpClientServiceDemoImpl;
 import uz.devops.sovchilaruzv2.web.rest.errors.*;
 import uz.devops.sovchilaruzv2.web.rest.vm.KeyAndPasswordVM;
 import uz.devops.sovchilaruzv2.web.rest.vm.ManagedUserVM;
@@ -42,13 +42,18 @@ public class AccountResource {
 
     private final MailService mailService;
 
-    private final OTPService otpService;
+    private final OtpClientServiceDemoImpl otpClientServiceDemoImpl;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, OTPService otpService) {
+    public AccountResource(
+        UserRepository userRepository,
+        UserService userService,
+        MailService mailService,
+        OtpClientServiceDemoImpl otpClientServiceDemoImpl
+    ) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
-        this.otpService = otpService;
+        this.otpClientServiceDemoImpl = otpClientServiceDemoImpl;
     }
 
     /**
@@ -67,24 +72,13 @@ public class AccountResource {
             throw new InvalidPasswordException();
         }
         User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
-        otpService.generateAndSaveOTP(user.getLogin(), OTPMode.PROD_MODE);
-        //        mailService.sendActivationEmail(user);
-    }
-
-    @PostMapping("/register/dev")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void registerAccountDev(@Valid @RequestBody ManagedUserVM managedUserVM) {
-        if (isPasswordLengthInvalid(managedUserVM.getPassword())) {
-            throw new InvalidPasswordException();
-        }
-        User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
-        otpService.generateAndSaveOTP(user.getLogin(), OTPMode.DEV_MODE);
+        otpClientServiceDemoImpl.send(user.getLogin(), OTPMode.PROD_MODE);
         //        mailService.sendActivationEmail(user);
     }
 
     @GetMapping("/verify")
     public void verifyOtp(@RequestParam(value = "login") String login, @RequestParam(value = "otp") String otp) {
-        otpService.verifyOTP(login, otp);
+        otpClientServiceDemoImpl.verify(login, otp);
     }
 
     /**
