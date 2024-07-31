@@ -1,5 +1,6 @@
 package uz.devops.sovchilaruzv2.web.rest;
 
+import jakarta.annotation.security.PermitAll;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.net.URI;
@@ -56,6 +57,7 @@ public class ProfileResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("")
+    @PermitAll
     public ResponseEntity<ProfileDTO> createProfile(@Valid @RequestBody ProfileDTO profileDTO) throws URISyntaxException {
         log.debug("REST request to save Profile : {}", profileDTO);
         if (profileDTO.getId() != null) {

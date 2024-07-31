@@ -89,10 +89,10 @@
             <column name="profile_state" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="location_id" type="bigint">
+            <column name="location_id" type="${uuidType}">
                 <constraints nullable="true" unique="true" uniqueConstraintName="ux_profile__location_id" />
             </column>
-            <column name="discoverability_id" type="bigint">
+            <column name="discoverability_id" type="${uuidType}">
                 <constraints nullable="true" />
             </column>
             <column name="nationality_id" type="${uuidType}">

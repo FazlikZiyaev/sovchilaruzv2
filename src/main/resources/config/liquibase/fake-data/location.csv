@@ -1,11 +1,11 @@
 id;lat;lon;country;city;district;ord;state
-1;30145.89;7570.14;Be;Eldridgefield;whoa deprive;18638;ACTIVE
-2;15549.91;6780.97;Ke;Gleichnerton;behind how;7015;ACTIVE
-3;12138.92;16285.71;Bo;West Paris;since wildly gadzooks;31867;INACTIVE
-4;23265.33;27647.47;Wa;Lake Ridge;club;31222;DELETED
-5;1222.49;6571.52;Na;Hartmannville;fantastic;26170;INACTIVE
-6;2033.99;10742.19;Sr;Issacstad;jealous quarter;9778;INACTIVE
-7;4503.72;2199.39;Om;South Mia;green boohoo;950;DELETED
-8;10533.82;16032.45;Tu;North Rhea;diphthongize that toward;27950;DELETED
-9;16889.06;18373.35;An;Port Charlotte;donation submit;16405;ACTIVE
-10;2827.92;11150.89;Fr;North Haylee;besides smoothly even;20605;DELETED
+4a7f722c-75f0-4b21-8be5-5cc57dd41cf6;30145.89;7570.14;Be;Eldridgefield;whoa deprive;18638;ACTIVE
+3c6380d0-ab85-4c89-9085-b5158127ed7c;15549.91;6780.97;Ke;Gleichnerton;behind how;7015;ACTIVE
+f3736087-1f1e-46f5-abc6-fa095a7aa79f;12138.92;16285.71;Bo;West Paris;since wildly gadzooks;31867;INACTIVE
+59026412-cea4-4c2e-aaf0-9f93c5e8c767;23265.33;27647.47;Wa;Lake Ridge;club;31222;DELETED
+74c4d3de-06bf-4362-8e45-340401f0991b;1222.49;6571.52;Na;Hartmannville;fantastic;26170;INACTIVE
+a585b0b9-d98c-4dcf-aa87-eede32e6858b;2033.99;10742.19;Sr;Issacstad;jealous quarter;9778;INACTIVE
+d2b1e4f6-e984-48a5-aba2-67ad15eda729;4503.72;2199.39;Om;South Mia;green boohoo;950;DELETED
+751d137d-ea20-4fd8-887a-27775a5019bf;10533.82;16032.45;Tu;North Rhea;diphthongize that toward;27950;DELETED
+9c770452-85a8-4f3e-899f-1cad565d95e6;16889.06;18373.35;An;Port Charlotte;donation submit;16405;ACTIVE
+dc02b8e7-d46a-47e3-b2e0-9891a5377413;2827.92;11150.89;Fr;North Haylee;besides smoothly even;20605;DELETED

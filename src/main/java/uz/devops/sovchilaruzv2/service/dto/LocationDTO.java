@@ -3,6 +3,7 @@ package uz.devops.sovchilaruzv2.service.dto;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.UUID;
 import uz.devops.sovchilaruzv2.domain.enumeration.EntityState;
 
 /**
@@ -11,7 +12,7 @@ import uz.devops.sovchilaruzv2.domain.enumeration.EntityState;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class LocationDTO implements Serializable {
 
-    private Long id;
+    private UUID id;
 
     @NotNull
     private Double lat;
@@ -35,11 +36,11 @@ public class LocationDTO implements Serializable {
 
     private EntityState state;
 
-    public Long getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
