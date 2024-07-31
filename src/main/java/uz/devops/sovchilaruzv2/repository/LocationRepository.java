@@ -1,5 +1,6 @@
 package uz.devops.sovchilaruzv2.repository;
 
+import java.util.UUID;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 import uz.devops.sovchilaruzv2.domain.Location;
@@ -9,4 +10,4 @@ import uz.devops.sovchilaruzv2.domain.Location;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface LocationRepository extends JpaRepository<Location, Long> {}
+public interface LocationRepository extends JpaRepository<Location, UUID> {}

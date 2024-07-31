@@ -7,6 +7,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -80,7 +81,7 @@ public class LocationResource {
      */
     @PutMapping("/{id}")
     public ResponseEntity<LocationDTO> updateLocation(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "id", required = false) final UUID id,
         @Valid @RequestBody LocationDTO locationDTO
     ) throws URISyntaxException {
         log.debug("REST request to update Location : {}, {}", id, locationDTO);
@@ -115,7 +116,7 @@ public class LocationResource {
      */
     @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<LocationDTO> partialUpdateLocation(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "id", required = false) final UUID id,
         @NotNull @RequestBody LocationDTO locationDTO
     ) throws URISyntaxException {
         log.debug("REST request to partial update Location partially : {}, {}", id, locationDTO);
@@ -167,7 +168,7 @@ public class LocationResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the locationDTO, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/{id}")
-    public ResponseEntity<LocationDTO> getLocation(@PathVariable Long id) {
+    public ResponseEntity<LocationDTO> getLocation(@PathVariable UUID id) {
         log.debug("REST request to get Location : {}", id);
         Optional<LocationDTO> locationDTO = locationService.findOne(id);
         return ResponseUtil.wrapOrNotFound(locationDTO);
@@ -180,7 +181,7 @@ public class LocationResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteLocation(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteLocation(@PathVariable UUID id) {
         log.debug("REST request to delete Location : {}", id);
         locationService.delete(id);
         return ResponseEntity

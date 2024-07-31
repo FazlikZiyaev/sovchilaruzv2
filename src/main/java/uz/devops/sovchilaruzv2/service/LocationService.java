@@ -3,6 +3,7 @@ package uz.devops.sovchilaruzv2.service;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.slf4j.Logger;
@@ -113,7 +114,7 @@ public class LocationService {
      * @return the entity.
      */
     @Transactional(readOnly = true)
-    public Optional<LocationDTO> findOne(Long id) {
+    public Optional<LocationDTO> findOne(UUID id) {
         log.debug("Request to get Location : {}", id);
         return locationRepository.findById(id).map(locationMapper::toDto);
     }
@@ -123,7 +124,7 @@ public class LocationService {
      *
      * @param id the id of the entity.
      */
-    public void delete(Long id) {
+    public void delete(UUID id) {
         log.debug("Request to delete Location : {}", id);
         locationRepository.deleteById(id);
     }

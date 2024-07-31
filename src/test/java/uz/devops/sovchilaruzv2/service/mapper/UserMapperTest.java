@@ -7,6 +7,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import uz.devops.sovchilaruzv2.domain.User;
+import uz.devops.sovchilaruzv2.repository.UserRepository;
 import uz.devops.sovchilaruzv2.service.dto.AdminUserDTO;
 import uz.devops.sovchilaruzv2.service.dto.UserDTO;
 
@@ -21,10 +22,11 @@ class UserMapperTest {
     private UserMapper userMapper;
     private User user;
     private AdminUserDTO userDto;
+    private UserRepository userRepository;
 
     @BeforeEach
     public void init() {
-        userMapper = new UserMapper();
+        userMapper = new UserMapper(userRepository);
         user = new User();
         user.setLogin(DEFAULT_LOGIN);
         user.setPassword(RandomStringUtils.randomAlphanumeric(60));

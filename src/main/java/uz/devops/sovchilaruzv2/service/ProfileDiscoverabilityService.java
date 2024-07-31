@@ -1,6 +1,7 @@
 package uz.devops.sovchilaruzv2.service;
 
 import java.util.Optional;
+import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -98,7 +99,7 @@ public class ProfileDiscoverabilityService {
      * @return the entity.
      */
     @Transactional(readOnly = true)
-    public Optional<ProfileDiscoverabilityDTO> findOne(Long id) {
+    public Optional<ProfileDiscoverabilityDTO> findOne(UUID id) {
         log.debug("Request to get ProfileDiscoverability : {}", id);
         return profileDiscoverabilityRepository.findById(id).map(profileDiscoverabilityMapper::toDto);
     }
@@ -108,7 +109,7 @@ public class ProfileDiscoverabilityService {
      *
      * @param id the id of the entity.
      */
-    public void delete(Long id) {
+    public void delete(UUID id) {
         log.debug("Request to delete ProfileDiscoverability : {}", id);
         profileDiscoverabilityRepository.deleteById(id);
     }
