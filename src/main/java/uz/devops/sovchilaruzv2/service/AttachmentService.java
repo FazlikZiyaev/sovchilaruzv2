@@ -20,6 +20,7 @@ import uz.devops.sovchilaruzv2.service.mapper.AttachmentMapper;
 @Transactional
 public class AttachmentService {
 
+    private static final Integer FILE_KEY_LENGTH = 36;
     private final Logger log = LoggerFactory.getLogger(AttachmentService.class);
 
     private final AttachmentRepository attachmentRepository;
@@ -109,5 +110,18 @@ public class AttachmentService {
     public void delete(UUID id) {
         log.debug("Request to delete Attachment : {}", id);
         attachmentRepository.deleteById(id);
+    }
+
+    public AttachmentDTO findByFileKey(String fileKey) {
+        log.debug("Request to get Attachment by file key : {}", fileKey);
+        if (fileKey.length() > FILE_KEY_LENGTH) {
+            fileKey = fileKey.substring(0, FILE_KEY_LENGTH);
+        }
+        Optional<Attachment> optionalAttachment = attachmentRepository.findByFileKey(fileKey);
+        if (optionalAttachment.isPresent()) {
+            log.info("Attachment found with file key: {}", fileKey);
+            return attachmentMapper.toDto(optionalAttachment.get());
+        }
+        throw new RuntimeException("Attachment not found with file key: " + fileKey);
     }
 }

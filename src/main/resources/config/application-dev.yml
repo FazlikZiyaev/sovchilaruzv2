@@ -12,13 +12,17 @@
 # Full reference is available at:
 # http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
 # ===================================================================
+minio:
+  url: http://localhost:9000
+  access-key: minioadmin
+  secret-key: minioadmin
 
 logging:
   level:
-    ROOT: DEBUG
-    tech.jhipster: DEBUG
-    org.hibernate.SQL: DEBUG
-    uz.devops.sovchilaruzv2: DEBUG
+    ROOT: INFO
+    tech.jhipster: INFO
+    org.hibernate.SQL: INFO
+    uz.devops.sovchilaruzv2: INFO
 
 spring:
   devtools:

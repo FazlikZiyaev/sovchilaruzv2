@@ -23,6 +23,7 @@ import uz.devops.sovchilaruzv2.security.AuthoritiesConstants;
 import uz.devops.sovchilaruzv2.security.SecurityUtils;
 import uz.devops.sovchilaruzv2.service.dto.AdminUserDTO;
 import uz.devops.sovchilaruzv2.service.dto.UserDTO;
+import uz.devops.sovchilaruzv2.web.rest.errors.UserNotFoundException;
 
 /**
  * Service class for managing users.
@@ -315,6 +316,7 @@ public class UserService {
 
     /**
      * Gets a list of all the authorities.
+     *
      * @return a list of all the authorities.
      */
     @Transactional(readOnly = true)
@@ -327,5 +329,13 @@ public class UserService {
         if (user.getEmail() != null) {
             Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE)).evict(user.getEmail());
         }
+    }
+
+    public User getByUserId(UUID userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isEmpty()) {
+            throw new UserNotFoundException("User not found with ID: " + userId);
+        }
+        return optionalUser.get();
     }
 }

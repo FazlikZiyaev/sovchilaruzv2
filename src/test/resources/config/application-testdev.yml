@@ -7,6 +7,10 @@
 #
 # More information on database containers: https://www.testcontainers.org/modules/databases/
 # ===================================================================
+minio:
+  url: http://testurl:9392
+  access-key: accsesskey
+  secret-key: secretkey
 
 spring:
   datasource:

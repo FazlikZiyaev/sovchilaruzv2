@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+
+    <changeSet id="20240725220900_added_column_User" author="${zafar}">
+        <addColumn tableName="attachment">
+            <column name="extension" type="varchar"/>
+            <column name="status" type="varchar"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>
