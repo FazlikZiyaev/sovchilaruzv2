@@ -210,3 +210,5 @@ jhipster:
 # ===================================================================
 
 # application:
+otp-service:
+  simulate: false

@@ -7,33 +7,42 @@ import org.springframework.cache.CacheManager;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import uz.devops.sovchilaruzv2.domain.User;
 import uz.devops.sovchilaruzv2.domain.enumeration.OTPMode;
+import uz.devops.sovchilaruzv2.repository.OTPRepository;
 import uz.devops.sovchilaruzv2.repository.UserRepository;
-import uz.devops.sovchilaruzv2.repository.impl.OTPRepositoryImpl;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
+// todo create otp service interface
+// and move current class to impl package
 public class OTPService {
 
-    private final OTPRepositoryImpl otpRepositoryImpl;
+    private final OTPRepository otpRepository;
     private final UserRepository userRepository;
-    private final CacheManager cacheManager;
+
+    private final int OTP_LIMIT = 3;
 
     public void generateAndSaveOTP(String login, OTPMode mode) {
-        String otp = otpRepositoryImpl.generateOTP(mode);
-        otpRepositoryImpl.saveOTP(login, otp);
+        int currentOTPCounter = otpRepository.getOtpRequestCount(login);
 
-        log.debug("Generating and Saving otp... result is {}", otp);
+        if (currentOTPCounter >= OTP_LIMIT) {
+            throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS, "Too many requests");
+        }
+
+        otpRepository.incrementOtpRequestCount(login);
+        String otp = otpRepository.generateOTP(mode);
+        otpRepository.saveOTP(login, otp);
+
+        log.debug("Generating and Saving otp... login: {} otp: {}", login, otp);
     }
 
     public void verifyOTP(String login, String otp) {
-        Boolean isSuccess = otpRepositoryImpl.checkOtp(login, otp);
+        String cachedOtp = otpRepository.getOTP(login);
 
-        log.debug("Checking otp... result is {}", isSuccess);
+        log.debug("Comparing cached otp: {} otp: {}", cachedOtp, otp);
 
-        if (!isSuccess) {
+        if (!cachedOtp.equals(otp)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Invalid OTP");
         }
 
@@ -42,17 +51,10 @@ public class OTPService {
             .map(user -> {
                 user.setActivated(true);
                 user.setActivationKey(null);
-                this.clearUserCaches(user);
                 log.debug("Activated user: {}", user);
                 userRepository.save(user);
+                otpRepository.resetOtpRequestCount(login);
                 return user;
             });
-    }
-
-    private void clearUserCaches(User user) {
-        Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE)).evict(user.getLogin());
-        if (user.getEmail() != null) {
-            Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE)).evict(user.getEmail());
-        }
     }
 }
