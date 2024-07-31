@@ -8,14 +8,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import uz.devops.sovchilaruzv2.domain.User;
-import uz.devops.sovchilaruzv2.domain.enumeration.OTPMode;
+import uz.devops.sovchilaruzv2.domain.enumeration.OtpMode;
 import uz.devops.sovchilaruzv2.repository.UserRepository;
 import uz.devops.sovchilaruzv2.security.SecurityUtils;
 import uz.devops.sovchilaruzv2.service.MailService;
 import uz.devops.sovchilaruzv2.service.UserService;
 import uz.devops.sovchilaruzv2.service.dto.AdminUserDTO;
 import uz.devops.sovchilaruzv2.service.dto.PasswordChangeDTO;
-import uz.devops.sovchilaruzv2.service.impl.OtpClientServiceDemoImpl;
+import uz.devops.sovchilaruzv2.service.interfaces.OtpService;
 import uz.devops.sovchilaruzv2.web.rest.errors.*;
 import uz.devops.sovchilaruzv2.web.rest.vm.KeyAndPasswordVM;
 import uz.devops.sovchilaruzv2.web.rest.vm.ManagedUserVM;
@@ -42,18 +42,13 @@ public class AccountResource {
 
     private final MailService mailService;
 
-    private final OtpClientServiceDemoImpl otpClientServiceDemoImpl;
+    private final OtpService otpService;
 
-    public AccountResource(
-        UserRepository userRepository,
-        UserService userService,
-        MailService mailService,
-        OtpClientServiceDemoImpl otpClientServiceDemoImpl
-    ) {
+    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, OtpService otpService) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
-        this.otpClientServiceDemoImpl = otpClientServiceDemoImpl;
+        this.otpService = otpService;
     }
 
     /**
@@ -64,7 +59,6 @@ public class AccountResource {
      * @throws EmailAlreadyUsedException {@code 400 (Bad Request)} if the email is already used.
      * @throws LoginAlreadyUsedException {@code 400 (Bad Request)} if the login is already used.
      */
-    // !!! todo make one endpoint for two modes !!!
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public void registerAccount(@Valid @RequestBody ManagedUserVM managedUserVM) {
@@ -72,13 +66,12 @@ public class AccountResource {
             throw new InvalidPasswordException();
         }
         User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
-        otpClientServiceDemoImpl.send(user.getLogin(), OTPMode.PROD_MODE);
-        //        mailService.sendActivationEmail(user);
+        otpService.send(user.getLogin(), OtpMode.PROD_MODE);
     }
 
     @GetMapping("/verify")
     public void verifyOtp(@RequestParam(value = "login") String login, @RequestParam(value = "otp") String otp) {
-        otpClientServiceDemoImpl.verify(login, otp);
+        otpService.verify(login, otp);
     }
 
     /**

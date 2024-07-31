@@ -1,13 +1,18 @@
 package uz.devops.sovchilaruzv2.service.impl;
 
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import uz.devops.sovchilaruzv2.domain.enumeration.OTPMode;
+import org.springframework.web.server.ResponseStatusException;
+import uz.devops.sovchilaruzv2.config.OtpProperties;
+import uz.devops.sovchilaruzv2.domain.enumeration.OtpMode;
+import uz.devops.sovchilaruzv2.repository.UserRepository;
+import uz.devops.sovchilaruzv2.service.interfaces.OtpClientService;
+import uz.devops.sovchilaruzv2.service.interfaces.OtpGeneratorService;
 import uz.devops.sovchilaruzv2.service.interfaces.OtpService;
+import uz.devops.sovchilaruzv2.service.interfaces.OtpStorageService;
 
 @Component
 @RequiredArgsConstructor
@@ -16,38 +21,60 @@ public class OtpServiceImpl implements OtpService {
 
     private static final String OTP_COUNT_SUFFIX = ":otp_count";
 
-    private final RedisTemplate<String, Object> redisTemplate;
+    private final OtpProperties properties;
+
+    private final OtpGeneratorService otpGeneratorService;
+    private final OtpStorageService otpStorageService;
+    private final OtpClientService otpClientService;
+    private final UserRepository userRepository;
 
     @Override
-    public String generateOtp(OTPMode mode) {
-        return mode == OTPMode.PROD_MODE ? String.valueOf(new Random().nextInt(9000) + 1000) : "1234";
+    public void send(String login, OtpMode mode) {
+        log.info("Otp -> OtpServiceImpl -> send beginning -> login = {} mode = {}", login, mode);
+
+        if (otpStorageService.getValueForKey(login + OTP_COUNT_SUFFIX) == null) {
+            otpStorageService.saveValueForKey(login + OTP_COUNT_SUFFIX, "0");
+        }
+
+        int currentOTPCounter = Integer.parseInt(otpStorageService.getValueForKey(login + OTP_COUNT_SUFFIX));
+
+        if (currentOTPCounter >= properties.getSms().getSmsCodeResendLimit()) {
+            log.info("Otp -> ClientDemo -> send -> too many requests: count = {}", currentOTPCounter);
+
+            throw new ResponseStatusException(HttpStatus.TOO_MANY_REQUESTS, "Too many requests");
+        }
+
+        otpStorageService.saveValueForKey(login + OTP_COUNT_SUFFIX, String.format("%d", currentOTPCounter + 1));
+        String otp = otpGeneratorService.generateOtp();
+        otpStorageService.saveValueForKey(login, otp, properties.getSms().getSmsCodeExpireTime());
+
+        otpClientService.send(login, otp);
+
+        log.info("Otp -> ClientDemo -> send success -> login: {} otp: {}", login, otp);
     }
 
     @Override
-    public String getOTP(String login) {
-        return (String) redisTemplate.opsForValue().get(login);
-    }
+    public void verify(String login, String otp) {
+        log.info("Otp -> ClientDemo -> verify beginning -> login = {} otp = {}", login, otp);
 
-    @Override
-    public String saveOTP(String login, String otp, int expirationTime) {
-        redisTemplate.opsForValue().set(login, otp);
-        redisTemplate.expire(login, expirationTime, TimeUnit.SECONDS);
-        return getOTP(login);
-    }
+        String cachedOtp = otpStorageService.getValueForKey(login);
 
-    @Override
-    public Integer getOtpRequestCount(String login) {
-        String countStr = (String) redisTemplate.opsForValue().get(login + OTP_COUNT_SUFFIX);
-        return countStr == null ? 0 : Integer.parseInt(countStr);
-    }
+        if (!cachedOtp.equals(otp)) {
+            log.info("Otp -> ClientDemo -> verify -> otp is not identical: cachedOtp: {} paramOtp: {}", cachedOtp, otp);
 
-    @Override
-    public void incrementOtpRequestCount(String login) {
-        redisTemplate.opsForValue().increment(login + OTP_COUNT_SUFFIX);
-    }
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Invalid OTP");
+        }
 
-    @Override
-    public void resetOtpRequestCount(String login) {
-        redisTemplate.delete(login + OTP_COUNT_SUFFIX);
+        userRepository
+            .findOneByLogin(login)
+            .map(user -> {
+                user.setActivated(true);
+                user.setActivationKey(null);
+                userRepository.save(user);
+                otpStorageService.deleteValueForKey(login + OTP_COUNT_SUFFIX);
+                return user;
+            });
+
+        log.info("Otp -> ClientDemo -> verify success -> login: {} otp: {}", login, otp);
     }
 }

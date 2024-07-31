@@ -5,12 +5,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import uz.devops.sovchilaruzv2.service.interfaces.RedisCacheService;
+import uz.devops.sovchilaruzv2.service.interfaces.OtpStorageService;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class RedisCacheServiceImpl implements RedisCacheService {
+public class OtpStorageServiceRedisImpl implements OtpStorageService {
 
     private final RedisTemplate<String, Object> redisTemplate;
 
