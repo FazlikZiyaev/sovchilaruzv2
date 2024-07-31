@@ -8,12 +8,14 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import uz.devops.sovchilaruzv2.domain.User;
+import uz.devops.sovchilaruzv2.domain.enumeration.OtpMode;
 import uz.devops.sovchilaruzv2.repository.UserRepository;
 import uz.devops.sovchilaruzv2.security.SecurityUtils;
 import uz.devops.sovchilaruzv2.service.MailService;
 import uz.devops.sovchilaruzv2.service.UserService;
 import uz.devops.sovchilaruzv2.service.dto.AdminUserDTO;
 import uz.devops.sovchilaruzv2.service.dto.PasswordChangeDTO;
+import uz.devops.sovchilaruzv2.service.interfaces.OtpService;
 import uz.devops.sovchilaruzv2.web.rest.errors.EmailAlreadyUsedException;
 import uz.devops.sovchilaruzv2.web.rest.errors.InvalidPasswordException;
 import uz.devops.sovchilaruzv2.web.rest.errors.LoginAlreadyUsedException;
@@ -42,10 +44,13 @@ public class AccountResource {
 
     private final MailService mailService;
 
-    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService) {
+    private final OtpService otpService;
+
+    public AccountResource(UserRepository userRepository, UserService userService, MailService mailService, OtpService otpService) {
         this.userRepository = userRepository;
         this.userService = userService;
         this.mailService = mailService;
+        this.otpService = otpService;
     }
 
     /**
@@ -63,7 +68,12 @@ public class AccountResource {
             throw new InvalidPasswordException();
         }
         User user = userService.registerUser(managedUserVM, managedUserVM.getPassword());
-        mailService.sendActivationEmail(user);
+        otpService.send(user.getLogin(), OtpMode.PROD_MODE);
+    }
+
+    @GetMapping("/verify")
+    public void verifyOtp(@RequestParam(value = "login") String login, @RequestParam(value = "otp") String otp) {
+        otpService.verify(login, otp);
     }
 
     /**

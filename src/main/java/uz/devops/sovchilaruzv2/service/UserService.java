@@ -1,5 +1,9 @@
 package uz.devops.sovchilaruzv2.service;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -20,11 +24,6 @@ import uz.devops.sovchilaruzv2.security.SecurityUtils;
 import uz.devops.sovchilaruzv2.service.dto.AdminUserDTO;
 import uz.devops.sovchilaruzv2.service.dto.UserDTO;
 import uz.devops.sovchilaruzv2.web.rest.errors.UserNotFoundException;
-
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Service class for managing users.
@@ -126,8 +125,7 @@ public class UserService {
         newUser.setLangKey(userDTO.getLangKey());
 
         // new user is not active
-        //        newUser.setActivated(false);
-        newUser.setActivated(true);
+        newUser.setActivated(false);
 
         // new user gets registration key
         //        newUser.setActivationKey(RandomUtil.generateActivationKey());
@@ -137,7 +135,7 @@ public class UserService {
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
-        this.clearUserCaches(newUser);
+        //        this.clearUserCaches(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
     }
@@ -340,5 +338,4 @@ public class UserService {
         }
         return optionalUser.get();
     }
-
 }
