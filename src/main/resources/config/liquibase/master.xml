@@ -15,6 +15,7 @@
     <property name="blobType" value="blob" dbms="postgresql"/>
     <property name="uuidType" value="uuid" dbms="postgresql"/>
     <property name="datetimeType" value="datetime" dbms="postgresql"/>
+    <property name="zafar" value="Zafar Malikov"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240725152735_added_entity_Profile.xml" relativeToChangelogFile="false"/>
@@ -29,6 +30,7 @@
     <include file="config/liquibase/changelog/20240725152935_added_entity_constraints_ContactInfo.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240725153335_added_entity_constraints_Attachment.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20240725220900_added_column_User.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20240730112201_added_column_attachment.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

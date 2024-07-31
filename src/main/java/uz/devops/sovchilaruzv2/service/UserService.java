@@ -1,9 +1,5 @@
 package uz.devops.sovchilaruzv2.service;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.*;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.CacheManager;
@@ -23,6 +19,12 @@ import uz.devops.sovchilaruzv2.security.AuthoritiesConstants;
 import uz.devops.sovchilaruzv2.security.SecurityUtils;
 import uz.devops.sovchilaruzv2.service.dto.AdminUserDTO;
 import uz.devops.sovchilaruzv2.service.dto.UserDTO;
+import uz.devops.sovchilaruzv2.web.rest.errors.UserNotFoundException;
+
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Service class for managing users.
@@ -316,6 +318,7 @@ public class UserService {
 
     /**
      * Gets a list of all the authorities.
+     *
      * @return a list of all the authorities.
      */
     @Transactional(readOnly = true)
@@ -329,4 +332,13 @@ public class UserService {
             Objects.requireNonNull(cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE)).evict(user.getEmail());
         }
     }
+
+    public User getByUserId(UUID userId) {
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (optionalUser.isEmpty()) {
+            throw new UserNotFoundException("User not found with ID: " + userId);
+        }
+        return optionalUser.get();
+    }
+
 }

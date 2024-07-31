@@ -82,6 +82,14 @@ public class User extends AbstractAuditingEntity<UUID> implements Serializable {
     @Column(name = "reset_date")
     private Instant resetDate = null;
 
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
     // Table relations
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
